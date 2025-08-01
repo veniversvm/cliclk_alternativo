@@ -1,22 +1,89 @@
-<!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Cuajo Project</title>
-	</head>
-	<body>
-		<slot />
-	</body>
-</html>
+---
+import "../../styles/global.scss";
+import "./layaout.scss";
+// Importa el menú aquí, en el layout
+import SidebarMenu from "../../components/menu/SideBarMenu.astro";
+---
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Cuajo Project</title>
+  </head>
+  <body>
+    <!-- 1. Botón para ABRIR el menú. Lo ponemos fuera para que siempre esté visible -->
+    <header>
+      <button
+        id="open-menu-btn"
+        class="hamburger-button"
+        aria-label="Abrir menú"
+      >
+        ☰ <!-- Este es el icono de hamburguesa (☰) -->
+      </button>
+    </header>
+
+    <!-- 2. El componente del Sidebar. Se coloca aquí, como hermano del <main> -->
+    <SidebarMenu />
+    <div id="sidebar-overlay" class="overlay"></div>
+
+    <!-- El contenido principal de cada página (tu Welcome.astro, etc.) se renderiza aquí -->
+    <main>
+      <slot />
+    </main>
+
+    <!-- 3. El script para controlar la apertura/cierre. Debe estar aquí. -->
+    <script>
+      const sidebar = document.getElementById("sidebar-menu");
+      const openBtn = document.getElementById("open-menu-btn");
+      const closeBtn = document.getElementById("close-menu-btn");
+      const overlay = document.getElementById("sidebar-overlay"); // <-- Añade esto
+
+      if (sidebar && openBtn && closeBtn && overlay) {
+        // <-- Añade overlay a la condición
+        openBtn.addEventListener("click", () =>
+          sidebar.classList.add("is-open")
+        );
+        closeBtn.addEventListener("click", () =>
+          sidebar.classList.remove("is-open")
+        );
+
+        // 👇 AÑADE ESTA LÍNEA 👇
+        // Cierra el menú si hacen clic en el overlay
+        overlay.addEventListener("click", () =>
+          sidebar.classList.remove("is-open")
+        );
+      }
+
+      const navLinks = sidebar.querySelectorAll(".sidebar-nav a");
+
+      // Añade un event listener a cada enlace
+      navLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+          // Si el menú está abierto, ciérralo
+          if (sidebar.classList.contains("is-open")) {
+            sidebar.classList.remove("is-open");
+          }
+        });
+      });
+    </script>
+
+    <!-- Estilos para el botón hamburguesa -->
+    <style>
+      .hamburger-button {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 1001; /* Súper importante: para que esté por encima de todo */
+        background: #1e1e1e;
+        color: white;
+        border: none;
+        font-size: 24px;
+        padding: 10px 12px;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+    </style>
+  </body>
+</html>

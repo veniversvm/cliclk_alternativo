@@ -1,0 +1,18 @@
+/// Buttons
+$primary-button-color: #6bbf5b;
+$secondary-button-color: #1e1e1e;
+$font-family: "Anton", sans-serif;
+
+.menu-button {
+  background-color: $secondary-button-color;
+  color: $primary-button-color;
+  width: 300px;
+  height: 100px;
+  font-size: 2rem;
+  padding: 1rem;
+  font-weight: 800;
+  
+  /* Manera más simple de centrar el contenido */
+  display: grid;
+  place-content: center;
+}

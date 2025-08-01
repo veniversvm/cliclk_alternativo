@@ -1,0 +1,10 @@
+---
+import './button.scss';
+
+// Haremos que el botón pueda ser un enlace si le pasamos un 'href'
+const { href } = Astro.props;
+const Tag = href ? 'a' : 'button';
+---
+<Tag href={href} class="menu-button">
+    <slot />
+</Tag>
