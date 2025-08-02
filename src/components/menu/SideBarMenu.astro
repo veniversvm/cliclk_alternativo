@@ -1,12 +1,17 @@
 ---
 import MenuButton from '../buttons/MenuButton.astro';
 import { navLinks } from '../../data/navigation.js';
-import './side-bars.scss'; 
+import './side-bars.scss';
 ---
+
 <aside id="sidebar-menu" class="sidebar">
     <nav class="sidebar-nav">
         <ul>
-            {navLinks.map(link => <li><MenuButton href={link.href}>{link.text}</MenuButton></li>)}
+            {navLinks.map(link => (
+                <li>
+                    <MenuButton href={link.href}>{link.text}</MenuButton>
+                </li>
+            ))}
         </ul>
     </nav>
     <footer class="sidebar-footer">
