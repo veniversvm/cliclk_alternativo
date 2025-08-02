@@ -1,15 +1,11 @@
 ---
 import MenuButton from '../buttons/MenuButton.astro';
-import { navLinks } from '../../data/navigation';
-// Asegúrate de que el nombre del archivo SCSS sea el correcto
-import './side-bars.scss'; 
+import { navLinks } from '../../data/navigation.js';
+import './side-bars.scss'; // Asegúrate de que este nombre sea correcto
 ---
 
-<!-- No hay cambios en el HTML, solo en la importación de arriba -->
+<!-- No hay botón de cierre. El menú empieza directamente con la navegación. -->
 <aside id="sidebar-menu" class="sidebar">
-    <div class="sidebar-header">
-        <button id="close-menu-btn" class="close-button" aria-label="Cerrar menú">×</button>
-    </div>
     <nav class="sidebar-nav">
         <ul>
             {navLinks.map(link => (
