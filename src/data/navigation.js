@@ -1,4 +1,5 @@
 export const navLinks = [
+  { text: 'INICIO', href: '/' },
   { text: 'TODO', href: '/todo' },
   { text: 'PÁGINAS', href: '/paginas' },
   { text: 'NOTICIAS', href: '/noticias' },

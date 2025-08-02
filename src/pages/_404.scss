@@ -1,0 +1,46 @@
+// src/pages/404.scss
+
+.container-404 {
+  // ... (esto está perfecto, no cambia)
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 90vh; 
+  padding: 1rem; // Un padding ligeramente menor para móviles
+  box-sizing: border-box;
+}
+
+.image-404 {
+  // 👇 AQUÍ ESTÁ LA MAGIA MOBILE-FIRST 👇
+  width: 60%;          // Por defecto, la imagen ocupa el 60% del ancho de la pantalla.
+  max-width: 250px;    // PERO nunca será más ancha de 250px.
+  height: auto;        // Mantiene la proporción.
+  margin-bottom: 2rem;
+}
+
+.title-404 {
+  // ... (esto con clamp() ya es perfecto)
+  color: white;
+  font-size: clamp(2rem, 8vw, 3.5rem);
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+  margin-bottom: 2rem;
+}
+
+.link-404 {
+  // ... (esto ya es flexible y funciona bien en móvil)
+  background-color: #1e1e1e;
+  color: #14AE5C;
+  padding: 0.8rem 2rem;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.1rem;
+  transition: transform 0.2s ease-out, background-color 0.2s ease;
+
+  &:hover {
+    transform: scale(1.05);
+    background-color: #333;
+  }
+}

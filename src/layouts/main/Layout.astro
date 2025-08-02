@@ -1,89 +1,88 @@
 ---
+import "./normalize.css";
 import "../../styles/global.scss";
 import "./layaout.scss";
-// Importa el menú aquí, en el layout
 import SidebarMenu from "../../components/menu/SideBarMenu.astro";
+import { navLinks } from "../../data/navigation.js";
+// import { logo } from '../../assets/astro.svg'
+import { ClientRouter } from "astro:transitions";
+// LÍNEA CORRECTA
+// import toggleScript from '~/scripts/toogle.js?raw'; // no funciono, quizas los Weis pueda
 ---
 
 <!doctype html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cuajo Project</title>
+    <ClientRouter />
   </head>
   <body>
-    <!-- 1. Botón para ABRIR el menú. Lo ponemos fuera para que siempre esté visible -->
-    <header>
+    <!-- El Header contendrá la lógica de navegación principal -->
+    <header class="main-header">
+      <a href="/" class="header-logo">Cuajo Project</a>
+      <!-- Botón hamburguesa (solo visible en móvil) -->
       <button
-        id="open-menu-btn"
+        id="hamburger-btn"
         class="hamburger-button"
-        aria-label="Abrir menú"
+        aria-label="Abrir/Cerrar menú"
+        aria-expanded="false"
       >
-        ☰ <!-- Este es el icono de hamburguesa (☰) -->
+        <span class="line line1"></span>
+        <span class="line line2"></span>
+        <span class="line line3"></span>
       </button>
+
+      <!-- Menú de escritorio (solo visible en desktop) -->
+      <nav class="desktop-nav">
+        {navLinks?.map((link) => <a href={link.href}>{link.text}</a>)}
+      </nav>
     </header>
 
-    <!-- 2. El componente del Sidebar. Se coloca aquí, como hermano del <main> -->
-    <SidebarMenu />
-    <div id="sidebar-overlay" class="overlay"></div>
-
-    <!-- El contenido principal de cada página (tu Welcome.astro, etc.) se renderiza aquí -->
     <main>
+      <!-- El menú lateral y el overlay son elementos globales, no van en el main -->
+      <SidebarMenu />
+      <div id="sidebar-overlay" class="overlay"></div>
+
+      <!-- El contenido de la página se renderiza aquí -->
       <slot />
     </main>
 
-    <!-- 3. El script para controlar la apertura/cierre. Debe estar aquí. -->
     <script>
-      const sidebar = document.getElementById("sidebar-menu");
-      const openBtn = document.getElementById("open-menu-btn");
-      const closeBtn = document.getElementById("close-menu-btn");
-      const overlay = document.getElementById("sidebar-overlay"); // <-- Añade esto
+      function initMobileMenu() {
+        const hamburgerBtn = document.getElementById("hamburger-btn");
+        const sidebar = document.getElementById("sidebar-menu");
+        const overlay = document.getElementById("sidebar-overlay");
 
-      if (sidebar && openBtn && closeBtn && overlay) {
-        // <-- Añade overlay a la condición
-        openBtn.addEventListener("click", () =>
-          sidebar.classList.add("is-open")
-        );
-        closeBtn.addEventListener("click", () =>
-          sidebar.classList.remove("is-open")
-        );
+        if (!hamburgerBtn || !sidebar || !overlay) {
+          return;
+        }
 
-        // 👇 AÑADE ESTA LÍNEA 👇
-        // Cierra el menú si hacen clic en el overlay
-        overlay.addEventListener("click", () =>
-          sidebar.classList.remove("is-open")
-        );
-      }
+        const toggleSidebar = () => {
+          const isOpen = sidebar.classList.contains("is-open");
+          hamburgerBtn.setAttribute("aria-expanded", String(!isOpen));
+          sidebar.classList.toggle("is-open");
+          hamburgerBtn.classList.toggle("is-active");
+        };
 
-      const navLinks = sidebar.querySelectorAll(".sidebar-nav a");
-
-      // Añade un event listener a cada enlace
-      navLinks.forEach((link) => {
-        link.addEventListener("click", () => {
-          // Si el menú está abierto, ciérralo
+        const closeSidebar = () => {
           if (sidebar.classList.contains("is-open")) {
-            sidebar.classList.remove("is-open");
+            toggleSidebar();
           }
-        });
-      });
-    </script>
+        };
 
-    <!-- Estilos para el botón hamburguesa -->
-    <style>
-      .hamburger-button {
-        position: fixed;
-        top: 20px;
-        left: 20px;
-        z-index: 1001; /* Súper importante: para que esté por encima de todo */
-        background: #1e1e1e;
-        color: white;
-        border: none;
-        font-size: 24px;
-        padding: 10px 12px;
-        border-radius: 8px;
-        cursor: pointer;
+        hamburgerBtn.addEventListener("click", toggleSidebar);
+        overlay.addEventListener("click", closeSidebar);
+
+        const menuLinks = sidebar.querySelectorAll("a");
+        menuLinks.forEach((link) => {
+          link.addEventListener("click", closeSidebar);
+        });
       }
-    </style>
+
+      initMobileMenu();
+      document.addEventListener("astro:after-swap", initMobileMenu);
+    </script>
   </body>
 </html>

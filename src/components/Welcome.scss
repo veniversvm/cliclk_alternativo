@@ -1,0 +1,9 @@
+.welcome-content {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		padding: 2rem;
+		min-height: 80vh; /* Para que ocupe algo de espacio vertical */
+	}
