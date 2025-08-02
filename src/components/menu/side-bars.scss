@@ -1,92 +1,69 @@
 @use '../../styles/variables' as var;
 
-// Estilos base del sidebar (esto ya lo tenías bien)
+// 1. Contenedor principal del sidebar (la caja verde)
 .sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 280px;
-    height: 100vh;
-    background-color: #14AE5C;
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    transform: translateX(-100%);
-    transition: transform 0.3s ease-in-out;
-    z-index: 999; // Añadimos z-index para que se ponga por encima de todo
-
-    &.is-open {
-        transform: translateX(0);
-    }
-}
-
-// ... (tus otros estilos como .sidebar-header, .close-button, etc. están bien)
-.sidebar-header {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 2rem;
-}
-
-.close-button {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 2.5rem;
-    cursor: pointer;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--sidebar-width); // <-- USA LA VARIABLE
+  height: 100dvh;
+  background-color: var.$primary-color;
+  padding:5rem 3.5rem 3.5rem 1rem; 
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+  z-index: 999;
+  
+  &.is-open {
+    transform: translateX(0);
+  }
 }
 
 .sidebar-nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
-// 👇👇 AQUÍ ESTÁ LA MAGIA 👇👇
-// Le damos estilos específicos a los botones SOLO cuando están dentro del sidebar
+
+// 5. Estilos para los botones del menú (MenuButton)
 .sidebar .menu-button {
-    width: 80%;       // Ocupa todo el ancho del contenedor (<li>)
-    height: auto;      // La altura será automática
-    // padding: 1rem;     // Un padding más adecuado para el menú
-    font-size: 1.2rem; // Un tamaño de fuente más pequeño para el menú
-    text-align: center;
-    padding: 0.8rem 1rem; // Ajustamos un poco el padding
-       border-radius: 8px; // 👈 ¡AÑADE ESTA LÍNEA!
+    width: 100%; // Ocupa todo el ancho disponible
+    height: auto;
+    padding: 0.8rem 1rem;
+    font-size: 1.1rem;
+    text-align: left;
+    border-radius: 8px;
+     text-align: center;
+
+    // Sobrescribimos los colores para que se vean bien aquí
+    background-color: var.$secondary-color;
+    color: #b3ffb3; // Un verde claro que contrasta con el fondo negro
 
     &:hover {
-        background-color: rgba(255, 255, 255, 0.1); // Un sutil fondo blanco al pasar el ratón
-        border-radius: 8px;
+        background-color: lighten(var.$secondary-color, 10%);
     }
 }
 
+// 6. Footer con redes sociales
 .sidebar-footer {
-    margin-top: auto;
+    margin-top: auto; // ¡Mágico! Empuja el footer hasta abajo
     text-align: center;
+    padding-top: 1.5rem; // Espacio para separarlo de los botones
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1rem;
-    a {
-        color: white;
-    }
-}
 
-/* Ejemplo de ajuste para el sidebar */
-.sidebar-nav {
-  padding-top: 2em; /* Espacio superior para bajar los botones */
-  
-  a {
-    display: block;
-    padding: 15px 20px;
-    margin: 10px 0;
-    color: var.$primary-color;
-    text-decoration: none;
-    transition: background 0.2s;
-    
-    &:hover {
-      background: rgba(255, 255, 255, 0.1);
+    a,
+    span {
+        color: var.$secondary-color;
+        text-decoration: none;
+        font-weight: bold;
     }
-  }
 }
