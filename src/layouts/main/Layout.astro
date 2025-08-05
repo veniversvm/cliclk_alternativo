@@ -6,6 +6,7 @@ import SidebarMenu from "../../components/menu/SideBarMenu.astro";
 import { navLinks } from "../../data/navigation.js";
 // import { logo } from '../../assets/astro.svg'
 import { ClientRouter } from "astro:transitions";
+import Footer from "../../components/footer/Footer.astro";
 // LÍNEA CORRECTA
 // import toggleScript from '~/scripts/toogle.js?raw'; // no funciono, quizas los Weis pueda
 ---
@@ -47,7 +48,9 @@ import { ClientRouter } from "astro:transitions";
 
       <!-- El contenido de la página se renderiza aquí -->
       <slot />
+
     </main>
+    <Footer />
 
     <script>
       function initMobileMenu() {
