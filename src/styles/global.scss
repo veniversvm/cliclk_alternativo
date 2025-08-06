@@ -12,6 +12,7 @@
 
 html {
   box-sizing: border-box; // Un reset moderno y útil.
+   overflow-x: hidden; // <-- AÑADE ESTA LÍNEA
 }
 
 *, *:before, *:after {
@@ -22,9 +23,10 @@ html {
 
 body {
   margin: 0;
-  min-height: 100vh;
+  min-height: 100dvh;
   // max-height: 100vh; // Esto puede causar problemas si el contenido es más alto que la pantalla. Considera quitarlo.
   width: 100%;
+   overflow-x: hidden; // <-- AÑADE ESTA LÍNEA TAMBIÉN POR SEGURIDAD
 
   font-family: var.$font-family;
   color: white; 
