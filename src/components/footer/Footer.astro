@@ -1,0 +1,65 @@
+---
+import "./footer.scss";
+// Para los iconos, la mejor práctica es usar un paquete como 'astro-icon'.
+// Si no lo tienes, puedes usar SVGs directamente o incluso <img>.
+// Aquí usaré placeholders de texto, pero te mostraré cómo se vería con 'astro-icon'.
+import { Icon } from "astro-icon/components";
+---
+
+<footer class="main-footer">
+  <!-- COLUMNA IZQUIERDA: REDES SOCIALES -->
+  <div class="footer-column footer-social">
+    <div class="social-icons">
+      <!-- 
+        Uso de astro-icon: 
+        Reemplaza 'youtube', 'instagram', 'tiktok' con los nombres de tus iconos.
+      -->
+      <a
+        href="https://youtube.com/@Click_Alternativo"
+        target="_blank"
+        aria-label="YouTube"
+      >
+        <Icon name="simple-icons:youtube" />
+      </a>
+      <a
+        href="https://instagram.com/Click_Alternativo"
+        target="_blank"
+        aria-label="Instagram"
+      >
+        <Icon name="simple-icons:instagram" />
+      </a>
+      <a
+        href="https://tiktok.com/@Click_Alternativo"
+        target="_blank"
+        aria-label="TikTok"
+      >
+        <Icon name="simple-icons:tiktok" />
+        <!-- ¡AQUÍ ESTÁ EL CAMBIO PRINCIPAL! -->
+      </a>
+    </div>
+    <a
+      href="https://instagram.com/Click_Alternativo"
+      target="_blank"
+      class="social-handle"
+    >
+      @Click_Alternativo
+    </a>
+  </div>
+
+  <!-- COLUMNA CENTRAL: INFO Y COPYRIGHT -->
+  <div class="footer-column footer-info">
+    <a href="mailto:contacto@clickalternativo.com"
+      >contacto@clickalternativo.com</a
+    >
+    <a href="/faq">F.A.Q</a>
+    <p class="copyright">
+      Copyright © 2025 Click Alternativo - Todos los derechos reservados.
+    </p>
+  </div>
+
+  <!-- COLUMNA DERECHA: APOYO -->
+  <div class="footer-column footer-support">
+    <p>¿Te gusta nuestro trabajo?</p>
+    <a href="/apoyanos" class="support-button">¡APOYANOS!</a>
+  </div>
+</footer>

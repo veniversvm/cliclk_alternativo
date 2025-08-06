@@ -6,6 +6,7 @@ import SidebarMenu from "../../components/menu/SideBarMenu.astro";
 import { navLinks } from "../../data/navigation.js";
 // import { logo } from '../../assets/astro.svg'
 import { ClientRouter } from "astro:transitions";
+import Footer from "../../components/footer/Footer.astro";
 // LÍNEA CORRECTA
 // import toggleScript from '~/scripts/toogle.js?raw'; // no funciono, quizas los Weis pueda
 
@@ -65,7 +66,9 @@ const { title, description } = Astro.props;
         </p>
         <a href="/politica-privacidad">Política de Privacidad</a>
       </footer>
+
     </main>
+    <Footer />
 
     <script>
       function initMobileMenu() {
