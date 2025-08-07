@@ -1,9 +1,13 @@
 ---
+import Logo from './Logo/Logo.astro'
+import SearchBar from './SearchBar/SearchBar.astro'
 import './Welcome.scss'
 ---
 
 <section class="welcome-content">
-	<h1>Soy el Cuajo y soy PUTO!</h1>
-	<p>Este es el contenido principal de mi página de inicio.</p>
+	<Logo/>
+	<!-- HACER CONDICIONAL MIENTRAS NO HAYAN BUSQUEDAS -->
+	<p id="initial-message">Contenido web seleccionado a mano, con criterio humano.</p>
+	<SearchBar />
 </section>
 

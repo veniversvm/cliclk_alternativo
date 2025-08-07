@@ -1,0 +1,155 @@
+---
+// src/components/SearchBar.astro
+import { Icon } from 'astro-icon/components';
+
+// El segundo icono en tu imagen se parece al logo de Vercel o Astro.
+// Como tienes la librería de simple-icons, usaré el de Astro.
+// Puedes cambiar 'simple-icons:astro' por cualquier otro que necesites.
+---
+
+<div class="search-wrapper">
+  <form class="search-form" action="/search" method="get">
+    <div class="input-container">
+      <input
+        type="search"
+        name="q"
+        placeholder="Buscar..."
+        aria-label="Campo de búsqueda"
+      />
+      <!-- Este es un botón 'reset' que limpia el formulario. Es más simple que usar JS. -->
+      <button type="reset" class="clear-button" aria-label="Limpiar búsqueda">&times;</button>
+    </div>
+
+    <div class="actions-container">
+      <button type="submit" class="action-button search" aria-label="Buscar">
+        <Icon name="mdi:magnify" size={32} />
+      </button>
+      <a href="/advanced-search" class="action-button options" aria-label="Opciones avanzadas">
+        <Icon name="simple-icons:astro" size={32} />
+      </a>
+    </div>
+  </form>
+</div>
+
+<style lang="scss">
+  // Variable de color principal que pediste
+  $primary-color: #90ee90; // Light green, similar to the image
+  $dark-icon-color: #1e1e1e; // Un color oscuro para los iconos
+
+  .search-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 1.5rem 1rem; // Espacio alrededor de todo el componente
+    // background-color: #1e1e1e; // Fondo oscuro como en la imagen
+  }
+
+  .search-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem; // Espacio entre la barra y los botones
+    width: 100%;
+
+    // --- Estilos Mobile First ---
+    max-width: 350px;
+  }
+
+  .input-container {
+    position: relative; // Necesario para posicionar el botón de limpiar
+    width: 100%;
+  }
+
+  input[type="search"] {
+    width: 100%;
+    height: 50px;
+    padding: 0.5rem 2.5rem 0.5rem 1.5rem; // Espacio para el placeholder y el botón de 'x'
+    border: 2px solid $primary-color;
+    border-radius: 9999px; // Esto lo hace una "píldora"
+    background-color: white;
+    font-size: 1rem;
+    color: #333;
+    transition: box-shadow 0.2s ease;
+
+    // Estilo del texto "Value"
+    &::placeholder {
+      color: #5e9653;
+      font-weight: 600;
+      opacity: 1;
+    }
+
+    // Oculta la 'x' por defecto de los inputs de búsqueda en Chrome/Safari
+    &::-webkit-search-decoration,
+    &::-webkit-search-cancel-button,
+    &::-webkit-search-results-button,
+    &::-webkit-search-results-decoration {
+      -webkit-appearance: none;
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba($primary-color, 0.5);
+    }
+  }
+
+  .clear-button {
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%); // Centrado vertical perfecto
+    background: transparent;
+    border: none;
+    font-size: 1.75rem;
+    line-height: 1;
+    color: #999;
+    cursor: pointer;
+    padding: 0 0.5rem;
+
+    &:hover {
+      color: #333;
+    }
+  }
+
+  .actions-container {
+    display: flex;
+    gap: 1rem; // Espacio entre los dos botones
+  }
+
+  .action-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%; // Círculo perfecto
+    background-color: $primary-color;
+    border: none;
+    cursor: pointer;
+    color: $dark-icon-color; // Color oscuro para el icono
+    text-decoration: none; // En caso de que sea un <a>
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
+    &:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 15px rgba($primary-color, 0.4);
+    }
+  }
+
+  // --- Estilos para pantallas más grandes ---
+  @media (min-width: 768px) {
+    .search-form {
+      // La barra crece en pantallas más grandes, como pediste
+      max-width: 500px;
+    }
+
+    input[type="search"] {
+
+    // Estilo del texto "Value"
+    &::placeholder {
+      color: #5e9653;
+      font-weight: 500;
+      opacity: 1;
+    }
+  }
+  }
+</style>

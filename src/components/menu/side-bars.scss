@@ -1,4 +1,5 @@
 @use '../../styles/variables' as var;
+@use 'sass:color';
 
 // 1. Contenedor principal del sidebar (la caja verde)
 // 1. Contenedor principal del sidebar (la caja verde)
@@ -75,7 +76,7 @@
     color: #b3ffb3; // Un verde claro que contrasta con el fondo negro
 
     &:hover {
-        background-color: lighten(var.$secondary-color, 10%);
+        background-color: color.adjust(var.$secondary-color, $lightness: 10%);
     }
 }
 

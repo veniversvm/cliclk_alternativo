@@ -1,6 +1,7 @@
 // src/components/footer/footer.scss
 
 @use '../../styles/variables' as var;
+@use 'sass:color';
 
 /* ================================== */
 /*  ESTILOS BASE (MOBILE-FIRST)       */
@@ -15,6 +16,7 @@
   color: var.$secondary-color;
   font-size: 0.5rem;
   box-sizing: border-box;
+  font-weight: 600;
 
   display: flex;
   flex-direction: row;
@@ -83,7 +85,7 @@
 }
 
 .support-button {
-  background-color: var.$dark-bg;
+  background-color: #1E1E1E;
   color: var.$light-color;
   padding: 0.75em 1.5em;
   border-radius: 4px;
@@ -91,9 +93,10 @@
   text-decoration: none;
   text-transform: uppercase;
   transition: background-color 0.2s ease;
+  margin-bottom: 0.2em;
 
   &:hover {
-    background-color: lighten(var.$dark-bg, 10%);
+    background-color: color.adjust(var.$dark-bg, $lightness: 10%);
   }
 }
 
