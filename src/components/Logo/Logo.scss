@@ -6,4 +6,11 @@
 .logo {
     height: 30vh;
     width: 100%;
+    margin-top: 1.2rem;
+}
+
+@media (min-width: 768px) {
+    .logo{
+        margin-top: 1.5rem;
+    }
 }

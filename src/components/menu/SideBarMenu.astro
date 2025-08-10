@@ -1,4 +1,5 @@
 ---
+import { Icon } from 'astro-icon/components';
 import MenuButton from '../buttons/MenuButton.astro';
 import { navLinks } from '../../data/navigation.js';
 import './side-bars.scss';
@@ -7,6 +8,9 @@ import './side-bars.scss';
 <aside id="sidebar-menu" class="sidebar">
     <nav class="sidebar-nav">
         <ul>
+            <li>
+                <MenuButton href="/">INICIO</MenuButton>
+            </li>
             {navLinks.map(link => (
                 <li>
                     <MenuButton href={link.href}>{link.text}</MenuButton>
@@ -15,8 +19,17 @@ import './side-bars.scss';
         </ul>
     </nav>
     <footer class="sidebar-footer">
-        <a href="#" aria-label="Instagram">IG</a>
-        <a href="#" aria-label="YouTube">YT</a>
+        <div class="social-links">
+            {/* 👇 2. Reemplaza "IG" por el componente Icon */}
+            <a href="#" aria-label="Instagram">
+                <Icon name="simple-icons:instagram" />
+            </a>
+
+            {/* 👇 3. Reemplaza "YT" por el componente Icon */}
+            <a href="#" aria-label="YouTube">
+                <Icon name="simple-icons:youtube" />
+            </a>
+        </div>
         <span>@Click_Alternativo</span>
     </footer>
 </aside>

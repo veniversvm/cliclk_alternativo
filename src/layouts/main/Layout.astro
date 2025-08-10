@@ -7,6 +7,9 @@ import { navLinks } from "../../data/navigation.js";
 // import { logo } from '../../assets/astro.svg'
 import { ClientRouter } from "astro:transitions";
 import Footer from "../../components/footer/Footer.astro";
+import Image from "astro/components/Image.astro";
+import MiniLogo from "../../assets/Logo/MiniLogo.svg";
+import type { record } from "astro:schema";
 // LÍNEA CORRECTA
 // import toggleScript from '~/scripts/toogle.js?raw'; // no funciono, quizas los Weis pueda
 
@@ -24,14 +27,14 @@ const { title, description } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title} | Cuajo Project</title>
+    <title>{title} | Click Alternativo</title>
     <meta name="description" content={description} />
     <ClientRouter />
   </head>
   <body>
     <!-- El Header contendrá la lógica de navegación principal -->
     <header class="main-header">
-      <a href="/" class="header-logo">Cuajo Project</a>
+      <a href="/" class="header-logo">Click Alternativo</a>
       <!-- Botón hamburguesa (solo visible en móvil) -->
       <button
         id="hamburger-btn"
@@ -46,6 +49,13 @@ const { title, description } = Astro.props;
 
       <!-- Menú de escritorio (solo visible en desktop) -->
       <nav class="desktop-nav">
+        <a href="/" >
+          <Image 
+          class="desktop-nav-image"
+          src={MiniLogo}
+          alt="Mini Logo de Click Alternativo para la barra de navegación. Al hacer clic irás a la página de inicio."
+          />
+        </a>
         {navLinks?.map((link) => <a href={link.href}>{link.text}</a>)}
       </nav>
     </header>

@@ -10,7 +10,7 @@
   width: var(--sidebar-width);
   height: 100dvh;
   background-color: var.$primary-color;
-  padding: 5rem 3.5rem 3.5rem 1rem; 
+   padding: 5rem 1.5rem 3.5rem; // Ajuste ligero de padding para dar espacio uniforme
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -58,22 +58,36 @@
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+
+  // 👇 CAMBIO 1: Hacemos que los <li> ocupen todo el ancho
+  // en lugar de centrarlos. 'stretch' es el valor por defecto,
+  // pero lo ponemos para ser explícitos.
+  align-items: stretch; 
+
+  // 👇 CAMBIO 2: Hacemos de cada <li> un contenedor flex
+  // para poder centrar el botón que está adentro.
+  li {
+    display: flex;
+    justify-content: center; // Centra el botón horizontalmente
+  }
 }
+
 
 
 // 5. Estilos para los botones del menú (MenuButton)
 .sidebar .menu-button {
-    width: 100%; // Ocupa todo el ancho disponible
+    // 👇 CAMBIO 3: Ahora este porcentaje funcionará
+    // porque todos los <li> padres son idénticos.
+    width: 85%; 
+    
     height: auto;
     padding: 0.8rem 1rem;
     font-size: 1.1rem;
-    text-align: left;
     border-radius: 8px;
-     text-align: center;
+    text-align: center;
 
-    // Sobrescribimos los colores para que se vean bien aquí
     background-color: var.$secondary-color;
-    color: #b3ffb3; // Un verde claro que contrasta con el fondo negro
+    color: #b3ffb3;
 
     &:hover {
         background-color: color.adjust(var.$secondary-color, $lightness: 10%);
@@ -81,16 +95,51 @@
 }
 
 // 6. Footer con redes sociales
+// 6. Footer con redes sociales
 .sidebar-footer {
-    margin-top: auto; // ¡Mágico! Empuja el footer hasta abajo
-    text-align: center;
-    padding-top: 1.5rem; // Espacio para separarlo de los botones
+    // ... (el código de .sidebar-footer y .social-links se queda igual) ...
+    margin-top: auto;
+    padding-top: 1.5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1rem;
+    
+    .social-links {
+        display: flex;
+        gap: 1.5rem;
+    }
 
-    a,
+    // Estilo para los iconos (los enlaces <a>)
+    a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 44px;
+        height: 44px;
+        background-color: var.$secondary-color;
+        // 👇 IMPORTANTE: El color del enlace ahora controla el color del icono SVG
+        color: var.$primary-color; 
+        text-decoration: none;
+        font-weight: bold;
+        border-radius: 50%;
+        transition: transform 0.2s ease-in-out, background-color 0.2s;
+
+        &:hover {
+            transform: scale(1.1);
+            background-color: color.adjust(var.$secondary-color, $lightness: 15%);
+        }
+
+        // 👇 AÑADIMOS ESTA REGLA PARA AJUSTAR EL TAMAÑO DEL ICONO
+        // Le decimos al <svg> que ocupe el 60% del espacio de su contenedor circular.
+        // Esto le da un "aire" visualmente agradable.
+        svg {
+          width: 60%;
+          height: 60%;
+        }
+    }
+
+    // ... (el código de span se queda igual) ...
     span {
         color: var.$secondary-color;
         text-decoration: none;
