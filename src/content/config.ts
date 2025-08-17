@@ -1,12 +1,12 @@
+// src/content/config.ts
 import { defineCollection, z } from 'astro:content';
 
-// Define la colección para tus entradas de blog
 const blogCollection = defineCollection({
-  type: 'content', // significa que son archivos .md o .mdx
+  type: 'content',
   schema: z.object({
     title: z.string(),
     description: z.string(),
-    pubDate: z.date(),
+    pubDate: z.coerce.date(),        // <<— importante
     author: z.string(),
     image: z.object({
       url: z.string(),
@@ -16,7 +16,4 @@ const blogCollection = defineCollection({
   }),
 });
 
-// Exporta tus colecciones
-export const collections = {
-  'blog': blogCollection,
-};
+export const collections = { blog: blogCollection };

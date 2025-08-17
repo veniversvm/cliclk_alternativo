@@ -1,0 +1,251 @@
+---
+// Carousel.astro
+
+// La interfaz y la recepción de props se mantienen igual.
+interface AstroImageMeta {
+  src: string;
+  width: number;
+  height: number;
+  format: string;
+}
+
+const { images = [] } = Astro.props as { images: AstroImageMeta[] };
+
+// Generamos un ID único para cada carrusel en la página.
+// Esto es importante si tienes varios carruseles en el mismo post.
+const carouselId = `carousel-${Math.random().toString(36).substr(2, 9)}`;
+---
+
+{images && images.length > 0 && (
+  <div id={carouselId} class="carousel-container relative" aria-roledescription="carousel">
+    <!-- Contenedor de las imágenes (diapositivas) -->
+    <div class="carousel-slides">
+      {images.map((img, i) => (
+        <div class:list={["carousel-slide", { 'active': i === 0 }]}>
+          <img
+            src={img.src}
+            alt={`Imagen ${i + 1}`}
+            width={img.width}
+            height={img.height}
+            loading={i === 0 ? "eager" : "lazy"}
+          />
+        </div>
+      ))}
+    </div>
+
+    <!-- Botones de Navegación -->
+    <button class="carousel-button prev" aria-label="Diapositiva anterior">‹</button>
+    <button class="carousel-button next" aria-label="Siguiente diapositiva">›</button>
+
+    <!-- Indicadores de puntos -->
+    <div class="carousel-dots">
+      {images.map((_, i) => (
+        <button class:list={["dot", { 'active': i === 0 }]} data-slide-to={i} aria-label={`Ir a la diapositiva ${i + 1}`}></button>
+      ))}
+    </div>
+  </div>
+)}
+
+<script>
+  // Todo este script se ejecutará en el lado del cliente.
+  document.querySelectorAll<HTMLElement>('.carousel-container').forEach(carouselContainer => {
+    // No hacer nada si este carrusel ya fue inicializado
+    if (carouselContainer.dataset.initialized) {
+      return;
+    }
+    carouselContainer.dataset.initialized = 'true';
+
+    let currentIndex = 0;
+    const slides = carouselContainer.querySelectorAll<HTMLElement>('.carousel-slide');
+    const dots = carouselContainer.querySelectorAll<HTMLButtonElement>('.dot');
+    const totalSlides = slides.length;
+    const intervalTime = 10000; // 10 segundos
+    let slideInterval: number;
+
+    function updateCarousel() {
+      // Mover slides
+      slides.forEach((slide, index) => {
+        slide.classList.toggle('active', index === currentIndex);
+      });
+      // Actualizar puntos
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentIndex);
+      });
+    }
+
+    function showNextSlide() {
+      currentIndex = (currentIndex + 1) % totalSlides;
+      updateCarousel();
+    }
+
+    function showPrevSlide() {
+      currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+      updateCarousel();
+    }
+
+    // Iniciar el cambio automático
+    function startSlideShow() {
+      // Limpiamos cualquier intervalo anterior para evitar duplicados
+      clearInterval(slideInterval);
+      slideInterval = window.setInterval(showNextSlide, intervalTime);
+    }
+    
+    // Detener el cambio automático
+    function stopSlideShow() {
+      clearInterval(slideInterval);
+    }
+
+    // Event Listeners para los botones
+    const nextButton = carouselContainer.querySelector<HTMLButtonElement>('.next');
+    const prevButton = carouselContainer.querySelector<HTMLButtonElement>('.prev');
+    
+    if (nextButton) nextButton.addEventListener('click', () => {
+      stopSlideShow(); // Detener el auto-play si el usuario interactúa
+      showNextSlide();
+    });
+
+    if (prevButton) prevButton.addEventListener('click', () => {
+      stopSlideShow();
+      showPrevSlide();
+    });
+
+    // Event Listeners para los puntos
+    dots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        const slideIndex = parseInt(dot.dataset.slideTo || '0', 10);
+        if (slideIndex !== currentIndex) {
+          stopSlideShow();
+          currentIndex = slideIndex;
+          updateCarousel();
+        }
+      });
+    });
+    
+    // Iniciar el carrusel
+    updateCarousel(); // Asegura que el estado inicial es correcto
+    startSlideShow(); // Comienza el ciclo automático
+  });
+</script>
+
+<style>
+  /* ==========================================================================
+     Estilos Base (Mobile-First)
+     ========================================================================== */
+  .carousel-container {
+    --carousel-aspect-ratio: 16 / 9; /* Controla la proporción. Ej: 1/1 (cuadrado), 4/3, etc. */
+    --carousel-transition-duration: 0.7s;
+    
+    position: relative;
+    width: 100%;
+    margin: 1.5rem auto;
+  }
+
+  .carousel-slides {
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    
+    /* --- LA MAGIA PARA EVITAR EL SALTO DE CONTENIDO --- */
+    /* Forzamos al contenedor a tener siempre la misma proporción */
+    aspect-ratio: var(--carousel-aspect-ratio);
+    background-color: #252525; /* Color de fondo mientras carga la imagen */
+  }
+
+  .carousel-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    /* --- LA MAGIA PARA LA TRANSICIÓN SUAVE (FADE) --- */
+    opacity: 0;
+    transition: opacity var(--carousel-transition-duration) ease-in-out;
+    pointer-events: none; /* Evita interacciones con slides ocultos */
+  }
+
+  .carousel-slide.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .carousel-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    
+    /* --- LA MAGIA PARA QUE LAS IMÁGENES ENCAJEN BIEN --- */
+    /* La imagen cubre todo el contenedor sin deformarse, recortando el exceso */
+    object-fit: cover; 
+  }
+
+  /* Estilos para los botones de navegación */
+  .carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    width: 2.5rem; /* Tamaño fijo */
+    height: 2.5rem; /* Tamaño fijo */
+    font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+  }
+  .carousel-button:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+
+  .carousel-button.prev { left: 0.5rem; }
+  .carousel-button.next { right: 0.5rem; }
+  
+  /* Estilos para los puntos indicadores */
+  .carousel-dots {
+    position: absolute;
+    bottom: 0.75rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    padding: 0;
+    transition: background-color 0.2s ease;
+  }
+
+  .dot.active {
+    background-color: white;
+  }
+
+  /* ==========================================================================
+     Estilos para pantallas más grandes (Desktop)
+     ========================================================================== */
+  @media (min-width: 768px) {
+    .carousel-container {
+      /* Aquí definimos el tamaño máximo que pidaste */
+      max-width: 800px; 
+    }
+
+    .carousel-button.prev { left: 1rem; }
+    .carousel-button.next { right: 1rem; }
+    
+    .dot:hover {
+        background-color: rgba(255, 255, 255, 0.8);
+    }
+  }
+</style>

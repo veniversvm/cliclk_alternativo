@@ -1,18 +1,15 @@
 ---
-// Importamos los tipos necesarios de astro:content
-import type {  CollectionEntry } from 'astro:content';
-import { getCollection } from 'astro:content';
-
-import Layout from '../../layouts/main/Layout.astro';
-import { Image } from 'astro:assets';
-import '../../styles/BlogPost.scss';
+// src/pages/blog/[...slug].astro
 import type { GetStaticPaths } from 'astro';
+import type { CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/main/Layout.astro';
+import '../../styles/BlogPost.scss';
 
-// Esta función le dice a Astro qué páginas construir
 export const getStaticPaths: GetStaticPaths = async () => {
-  const blogEntries = await getCollection('blog');
-  return blogEntries.map(entry => ({
-    params: { slug: entry.slug },
+  const entries = await getCollection('blog');
+  return entries.map((entry) => ({
+    params: { slug: entry.slug }, // funciona con [...slug]
     props: { entry },
   }));
 };
@@ -20,31 +17,27 @@ export const getStaticPaths: GetStaticPaths = async () => {
 interface Props {
   entry: CollectionEntry<'blog'>;
 }
-
 const { entry } = Astro.props;
 const { Content } = await entry.render();
 ---
-<Layout title={entry.data.title} description={entry.data.description}>
 
+<Layout title={entry.data.title} description={entry.data.description}>
   <article class="blog-post">
     <header class="post-header">
       <h1 class="post-title">{entry.data.title}</h1>
       <div class="post-meta">
         <span>Por: {entry.data.author}</span>
-        <span>Publicado: <time datetime={entry.data.pubDate.toISOString()}>
-          {new Date(entry.data.pubDate).toLocaleDateString('es-ES', {
-            year: 'numeric', month: 'long', day: 'numeric',
-          })}
-        </time></span>
+        <span>
+          Publicado:
+          <time datetime={entry.data.pubDate.toISOString()}>
+            {new Date(entry.data.pubDate).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })}
+          </time>
+        </span>
       </div>
     </header>
-
-    {/* La plantilla ya no necesita el carrusel ni las etiquetas aquí */}
-    {/* ¡El componente <Content /> ahora se encarga de todo! */}
 
     <div class="post-content">
       <Content />
     </div>
   </article>
-
 </Layout>
