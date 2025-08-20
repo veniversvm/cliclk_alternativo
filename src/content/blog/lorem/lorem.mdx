@@ -1,0 +1,26 @@
+---
+title: 'Spotify'
+pubDate: '2022-07-01'
+description: 'Todo sobre Spotify, el gigante del streaming musical.'
+author: 'Luigi Skull'
+tags: ["musica", "reproductores", "online"]
+---
+
+import Carousel from '../../../components/carousel/Carousel.astro';
+
+export const modules = import.meta.glob('./*.{jpeg,jpg,png,webp}', {
+  eager: true,
+});
+
+export const images = Object.values(modules).map((mod) => mod.default);
+
+<Carousel images={images} />
+
+# My First Blog Post
+
+Veamos qué es Spotify. Aquí te mostramos una galería:
+
+
+## Spotify
+
+"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."

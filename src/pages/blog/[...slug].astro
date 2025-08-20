@@ -1,15 +1,19 @@
 ---
-// src/pages/blog/[...slug].astro
 import type { GetStaticPaths } from 'astro';
 import type { CollectionEntry } from 'astro:content';
 import { getCollection } from 'astro:content';
+import { dirname } from 'node:path'; // <-- Importamos una utilidad de Node para manejar rutas
 import Layout from '../../layouts/main/Layout.astro';
-import '../../styles/BlogPost.scss';
+import Carousel from '../../components/carousel/Carousel.astro'; 
+import '../../styles/blogpost.scss';
+
+// El import.meta.glob es correcto, pero lo tipamos para más seguridad
+const allImages = import.meta.glob<{ default: ImageMetadata }>('/src/content/blog/**/*.{jpeg,jpg,png,webp}');
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const entries = await getCollection('blog');
   return entries.map((entry) => ({
-    params: { slug: entry.slug }, // funciona con [...slug]
+    params: { slug: entry.slug },
     props: { entry },
   }));
 };
@@ -19,25 +23,67 @@ interface Props {
 }
 const { entry } = Astro.props;
 const { Content } = await entry.render();
+
+// --- LA MAGIA ESTÁ AQUÍ ---
+
+// 1. Obtenemos el directorio del post usando su 'id'
+//    - entry.id para tu post es: "spotify/spotify.mdx"
+//    - dirname(entry.id) nos devuelve: "spotify"  <-- ¡Justo lo que necesitamos!
+const postDir = dirname(entry.id);
+
+// 2. Creamos la ruta de filtro correcta
+const filterPath = `/src/content/blog/${postDir}/`;
+
+// 3. Filtramos las imágenes usando la ruta correcta
+const imagePromises = Object.entries(allImages)
+  .filter(([path]) => path.startsWith(filterPath))
+  .map(([, importer]) => importer());
+
+// 4. Esperamos a que se carguen las imágenes
+const currentPostImages = (await Promise.all(imagePromises)).map((mod) => mod.default);
 ---
 
 <Layout title={entry.data.title} description={entry.data.description}>
   <article class="blog-post">
-    <header class="post-header">
-      <h1 class="post-title">{entry.data.title}</h1>
-      <div class="post-meta">
-        <span>Por: {entry.data.author}</span>
-        <span>
-          Publicado:
-          <time datetime={entry.data.pubDate.toISOString()}>
-            {new Date(entry.data.pubDate).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })}
-          </time>
-        </span>
-      </div>
-    </header>
 
-    <div class="post-content">
-      <Content />
+    <!-- ===== COLUMNA IZQUIERDA (VISUAL) ===== -->
+    <div class="post-column-visual">
+      
+      <!-- Renderizamos el carrusel solo si se encontraron imágenes -->
+      {currentPostImages.length > 0 ? (
+        <Carousel images={currentPostImages} />
+      ) : (
+        <p>No se encontraron imágenes para este post.</p>
+      )}
+
+      <div class="tags-container">
+        <h3>ETIQUETAS</h3>
+        <ul class="tags-list">
+          {entry.data.tags.map(tag => (
+            <li><a href={`/tags/${tag}`}>{tag.toUpperCase()}</a></li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    <!-- ===== COLUMNA DERECHA (TEXTO) ===== -->
+    <div class="post-column-text">
+      <header class="post-header">
+        <h1 class="post-title">{entry.data.title}</h1>
+        <div class="post-meta">
+          <span>Por: {entry.data.author}</span>
+          <span>
+            Publicado:
+            <time datetime={entry.data.pubDate.toISOString()}>
+              {new Date(entry.data.pubDate).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })}
+            </time>
+          </span>
+        </div>
+      </header>
+
+      <div class="post-content">
+        <Content />
+      </div>
     </div>
   </article>
 </Layout>
