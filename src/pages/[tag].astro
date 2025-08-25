@@ -1,0 +1,146 @@
+---
+// src/pages/[tag].astro
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/main/Layout.astro';
+// Si creas un componente para las tarjetas, impórtalo aquí.
+// import PostCard from '../components/PostCard.astro';
+
+// 1. getStaticPaths: Definimos EXACTAMENTE qué páginas generar.
+export async function getStaticPaths() {
+  // Lista de las secciones de tu navegación que corresponden a etiquetas de blog.
+  // Deben estar en minúsculas para que coincidan con la URL.
+  const sectionTags = [
+    'software',
+    'gaming',
+    'cine',
+    'musica',
+    'lectura'
+  ];
+
+  // Generamos una ruta para cada una de estas secciones.
+  return sectionTags.map(tag => {
+    return {
+      params: { tag: tag }, // La clave 'tag' coincide con el nombre del archivo [tag].astro
+    };
+  });
+}
+
+// 2. Este código se ejecuta para cada página generada (e.g., /musica, /cine, etc.)
+const { tag } = Astro.params;
+
+// Obtenemos todas las entradas de la colección 'blog'
+const allPosts = await getCollection('blog');
+
+// Filtramos los posts: nos quedamos solo con los que incluyen la etiqueta actual.
+// ¡Importante! Comparamos todo en minúsculas para evitar problemas (e.g. "Cine" vs "cine").
+const filteredPosts = allPosts.filter(post =>
+  post.data.tags.map(t => t.toLowerCase()).includes(tag!.toLowerCase())
+);
+
+// Ordenamos los posts filtrados por fecha (los más nuevos primero)
+const sortedPosts = filteredPosts.sort((a, b) =>
+  b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+// Nos quedamos con un máximo de 5 entradas
+const latestPosts = sortedPosts.slice(0, 5);
+
+// Función para poner en mayúscula la primera letra del tag para el título de la página
+const pageTitle = tag!.charAt(0).toUpperCase() + tag!.slice(1);
+---
+
+<Layout
+  title={`Sección: ${pageTitle}`}
+  description={`Últimas 5 entradas sobre ${pageTitle} en Click Alternativo.`}
+>
+  <div class="section-container">
+    <h1>Artículos sobre: <span>{pageTitle}</span></h1>
+
+    {latestPosts.length > 0 ? (
+      <div class="posts-grid">
+        {latestPosts.map(post => (
+          // Usamos un simple <a>, pero podrías mover esto a un componente <PostCard />
+          <a href={`/blog/${post.slug}/`} class="post-card">
+            <h2>{post.data.title}</h2>
+            <p>{post.data.description}</p>
+            <time datetime={post.data.pubDate.toISOString()}>
+              {new Date(post.data.pubDate).toLocaleDateString('es-ES', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              })}
+            </time>
+          </a>
+        ))}
+      </div>
+    ) : (
+      <p>Aún no hay artículos en esta sección. ¡Vuelve pronto!</p>
+    )}
+  </div>
+</Layout>
+
+<style lang="scss">
+  // Puedes usar los mismos estilos que te sugerí en la respuesta anterior.
+  // Los pego aquí de nuevo por conveniencia.
+  @use '../styles/variables' as var;
+
+  .section-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    color: #fff;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    text-transform: uppercase;
+    span {
+      color: var.$primary-color;
+    }
+  }
+
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .post-card {
+    background-color: #2a2a2a;
+    border: 1px solid #444;
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-decoration: none;
+    color: #fff;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+      border-color: var.$primary-color;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      margin-top: 0;
+      color: var.$primary-color;
+    }
+
+    p {
+      font-family: sans-serif; // Puedes ajustar la fuente para la descripción
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #ccc;
+    }
+
+    time {
+        display: block;
+        margin-top: 1rem;
+        font-size: 0.875rem;
+        color: #aaa;
+    }
+  }
+</style>
