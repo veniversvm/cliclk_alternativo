@@ -7,8 +7,11 @@ import mdx from "@astrojs/mdx";
 // https://astro.build/config
 export default defineConfig({
   integrations: [ icon(), mdx()],
-   output: 'server', 
-   adapter: node({
-    mode: 'standalone',
-  }),
+  //  output: 'server', 
+  //  adapter: node({
+  //   mode: 'standalone',
+  // }),
+  https:  'https://veniversvm.github.io',
+  base: '/cliclk_alternativo',
+  output: 'static',
 });
