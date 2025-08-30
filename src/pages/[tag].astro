@@ -1,54 +1,62 @@
 ---
 // src/pages/[tag].astro
-import { getCollection } from 'astro:content';
-import Layout from '../layouts/main/Layout.astro';
-// Si creas un componente para las tarjetas, impórtalo aquí.
-// import PostCard from '../components/PostCard.astro';
 
-// 1. getStaticPaths: Definimos EXACTAMENTE qué páginas generar.
+// --- FRONTMATTER (Tu lógica está perfecta, no se cambia nada aquí) ---
+import { getCollection } from "astro:content";
+import Layout from "../layouts/main/Layout.astro";
+import { Image } from "astro:assets";
+import { dirname } from "node:path";
+
 export async function getStaticPaths() {
-  // Lista de las secciones de tu navegación que corresponden a etiquetas de blog.
-  // Deben estar en minúsculas para que coincidan con la URL.
   const sectionTags = [
-    'software',
-    'gaming',
-    'cine',
-    'musica',
-    'lectura'
+    "noticias", "paginas", "software", "gaming", "cine", "musica", "lectura",
   ];
-
-  // Generamos una ruta para cada una de estas secciones.
-  return sectionTags.map(tag => {
-    return {
-      params: { tag: tag }, // La clave 'tag' coincide con el nombre del archivo [tag].astro
-    };
-  });
+  return sectionTags.map((tag) => ({
+    params: { tag },
+  }));
 }
 
-// 2. Este código se ejecuta para cada página generada (e.g., /musica, /cine, etc.)
 const { tag } = Astro.params;
-
-// Obtenemos todas las entradas de la colección 'blog'
-const allPosts = await getCollection('blog');
-
-// Filtramos los posts: nos quedamos solo con los que incluyen la etiqueta actual.
-// ¡Importante! Comparamos todo en minúsculas para evitar problemas (e.g. "Cine" vs "cine").
-const filteredPosts = allPosts.filter(post =>
-  post.data.tags.map(t => t.toLowerCase()).includes(tag!.toLowerCase())
+const allPosts = await getCollection("blog");
+const filteredPosts = allPosts.filter((post) =>
+  post.data.tags.map((t) => t.toLowerCase()).includes(tag!.toLowerCase()),
 );
-
-// Ordenamos los posts filtrados por fecha (los más nuevos primero)
-const sortedPosts = filteredPosts.sort((a, b) =>
-  b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+const sortedPosts = filteredPosts.sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
-
-// Nos quedamos con un máximo de 5 entradas
 const latestPosts = sortedPosts.slice(0, 5);
-
-// Función para poner en mayúscula la primera letra del tag para el título de la página
 const pageTitle = tag!.charAt(0).toUpperCase() + tag!.slice(1);
+
+const allImages = await import.meta.glob(
+  "/src/content/blog/**/*.{jpeg,jpg,png,gif,webp,svg}",
+);
+
+const postsWithImages = await Promise.all(
+  latestPosts.map(async (post) => {
+    const postDir = dirname(post.id);
+    const searchPath = `/src/content/blog/${postDir}/`.toLowerCase();
+    const imagePath = Object.keys(allImages).find((path) =>
+      path.toLowerCase().startsWith(searchPath),
+    );
+
+    let coverImage = null;
+    if (imagePath) {
+      const imageModule = (await allImages[imagePath]()) as any;
+      coverImage = imageModule.default;
+    }
+
+    return {
+      ...post,
+      data: {
+        ...post.data,
+        coverImage: coverImage,
+      },
+    };
+  }),
+);
 ---
 
+<!-- El HTML solo debe estar UNA VEZ -->
 <Layout
   title={`Sección: ${pageTitle}`}
   description={`Últimas 5 entradas sobre ${pageTitle} en Click Alternativo.`}
@@ -56,40 +64,62 @@ const pageTitle = tag!.charAt(0).toUpperCase() + tag!.slice(1);
   <div class="section-container">
     <h1>Artículos sobre: <span>{pageTitle}</span></h1>
 
-    {latestPosts.length > 0 ? (
+    {postsWithImages.length > 0 ? (
       <div class="posts-grid">
-        {latestPosts.map(post => (
-          // Usamos un simple <a>, pero podrías mover esto a un componente <PostCard />
-          <a href={`/blog/${post.slug}/`} class="post-card">
-            <h2>{post.data.title}</h2>
-            <p>{post.data.description}</p>
-            <time datetime={post.data.pubDate.toISOString()}>
-              {new Date(post.data.pubDate).toLocaleDateString('es-ES', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-              })}
-            </time>
-          </a>
+        {postsWithImages.map(post => (
+          <div class="post-card">
+            <a href={`/blog/${post.slug}/`} class="card-image-link" aria-label={`Leer más sobre ${post.data.title}`}>
+              {post.data.coverImage ? (
+                <Image
+                  src={post.data.coverImage}
+                  alt={`Imagen de portada para ${post.data.title}`}
+                  widths={[240, 540, 720]}
+                  sizes={`(min-width: 768px) 33vw, 80px`}
+                  format="webp"
+                  quality={"high"}
+                  class="card-image"
+                />
+              ) : (
+                <div class="image-placeholder"></div>
+              )}
+            </a>
+            <div class="card-content">
+              <a href={`/blog/${post.slug}/`} class="card-title-link">
+                <h2>{post.data.title}</h2>
+              </a>
+              <p>{post.data.description}</p>
+              <time datetime={post.data.pubDate.toISOString()}>
+                {new Date(post.data.pubDate).toLocaleDateString('es-ES', {
+                  year: 'numeric', month: 'long', day: 'numeric',
+                })}
+              </time>
+              {post.data.externalUrl && (
+                <div class="external-link-wrapper">
+                  <a href={post.data.externalUrl} class="external-button" target="_blank" rel="noopener noreferrer">
+                    Visitar Página →
+                  </a>
+                </div>
+              )}
+            </div>
+          </div>
         ))}
       </div>
     ) : (
-      <p>Aún no hay artículos en esta sección. ¡Vuelve pronto!</p>
+      <p>Aún no hay artículos en esta sección. ¡Vuelve pronto!.</p>
     )}
   </div>
 </Layout>
 
+<!-- --- ESTILOS SCSS CORREGIDOS --- -->
 <style lang="scss">
-  // Puedes usar los mismos estilos que te sugerí en la respuesta anterior.
-  // Los pego aquí de nuevo por conveniencia.
   @use '../styles/variables' as var;
 
+  /* --- Estilos Generales --- */
   .section-container {
     width: 100%;
     max-width: 1200px;
     margin: 2rem auto;
     padding: 0 1rem;
-    color: #fff;
   }
 
   h1 {
@@ -97,50 +127,89 @@ const pageTitle = tag!.charAt(0).toUpperCase() + tag!.slice(1);
     margin-bottom: 2rem;
     text-align: center;
     text-transform: uppercase;
+    color: #fff;
     span {
       color: var.$primary-color;
     }
   }
 
+  /* --- Estilos base (Móvil) --- */
   .posts-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    display: flex;
+    flex-direction: column;
     gap: 1.5rem;
   }
 
   .post-card {
+    display: flex;
+    gap: 1rem;
     background-color: #2a2a2a;
     border: 1px solid #444;
-    border-radius: 8px;
-    padding: 1.5rem;
-    text-decoration: none;
-    color: #fff;
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    border-radius: 12px;
+    padding: 1rem;
+    transition: border-color 0.2s ease;
 
     &:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
-      border-color: var.$primary-color;
+      border-color: #555;
     }
+  }
 
+  .card-image-link { flex-shrink: 0; }
+  .card-image, .image-placeholder {
+    width: 80px; height: 80px; object-fit: cover; border-radius: 8px;
+  }
+  
+  .card-content {
+    display: flex; flex-direction: column; justify-content: center;
+  }
+
+  .card-title-link {
+    text-decoration: none;
     h2 {
-      font-size: 1.5rem;
-      margin-top: 0;
-      color: var.$primary-color;
+      font-size: 1.25rem; margin: 0 0 0.5rem 0; color: var.$primary-color; transition: color 0.2s ease;
+    }
+    &:hover h2 {
+      color: lighten(var.$primary-color, 15%);
+    }
+  }
+
+  .card-content p {
+    font-size: 0.9rem; color: #ccc; margin: 0; line-height: 1.5;
+  }
+
+  .card-content time {
+    font-size: 0.8rem; color: #aaa; margin-top: 0.5rem;
+  }
+  
+  .external-link-wrapper { margin-top: 0.75rem; }
+  .external-button {
+    display: inline-block; background-color: #333; color: var.$primary-color; text-decoration: none;
+    padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.8rem; font-weight: bold;
+    border: 1px solid #555; transition: background-color 0.2s ease, color 0.2s ease;
+    &:hover {
+      background-color: var.$primary-color; color: #121212;
+    }
+  }
+
+  /* --- Estilos para Tablet y Superior (LA CUADRÍCULA) --- */
+  @media (min-width: 768px) {
+    /* AQUÍ SE DEFINE LA CUADRÍCULA PARA PC */
+    .posts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     }
 
-    p {
-      font-family: sans-serif; // Puedes ajustar la fuente para la descripción
-      font-size: 1rem;
-      line-height: 1.6;
-      color: #ccc;
+    .post-card {
+      flex-direction: column; padding: 0;
     }
 
-    time {
-        display: block;
-        margin-top: 1rem;
-        font-size: 0.875rem;
-        color: #aaa;
+    .card-image, .image-placeholder {
+      width: 100%; height: auto; aspect-ratio: 16 / 10; border-radius: 12px 12px 0 0;
     }
+    
+    .card-content { padding: 1.5rem; }
+    .card-title-link h2 { font-size: 1.5rem; }
+    .card-content p { font-size: 1rem; }
+    .card-content time { font-size: 0.875rem; }
   }
 </style>

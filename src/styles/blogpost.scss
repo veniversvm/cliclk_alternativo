@@ -11,7 +11,31 @@
   border-radius: 15px;
   backdrop-filter: blur(5px);
   font-family: "instrument sans";
+
+  
 }
+
+.visit-link-container {
+    margin-top: 2rem;
+    text-align: center;
+  }
+
+  .visit-button {
+    display: inline-block;
+    background-color: var.$primary-color; /* Usando tu variable de color primario */
+    color: #121212; /* Texto oscuro para buen contraste */
+    text-decoration: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(var.$primary-color, 0.4);
+    }
+  }
 
 .tags-container { display: none; }
 .post-header { text-align: center; margin-bottom: 2rem; border-bottom: 2px solid var.$primary-color; padding-bottom: 1.5rem; }

@@ -41,15 +41,21 @@ const imagePromises = Object.entries(allImages)
 
 // 4. Esperamos a que se carguen las imágenes
 const currentPostImages = (await Promise.all(imagePromises)).map((mod) => mod.default);
+
+//  --- LÓGICA PARA EL TEXTO DEL BOTÓN ---
+// Extraemos el nombre del dominio para mostrar un texto más limpio
+const displayUrl = entry.data.externalUrl 
+  ? new URL(entry.data.externalUrl).hostname.replace(/^www\./, '') 
+  : '';
+
 ---
 
 <Layout title={entry.data.title} description={entry.data.description}>
   <article class="blog-post">
 
-    <!-- ===== COLUMNA IZQUIERDA (VISUAL) ===== -->
+    <!-- ===== COLUMNA IZQUIDA (VISUAL) ===== -->
     <div class="post-column-visual">
       
-      <!-- Renderizamos el carrusel solo si se encontraron imágenes -->
       {currentPostImages.length > 0 ? (
         <Carousel images={currentPostImages} />
       ) : (
@@ -60,10 +66,21 @@ const currentPostImages = (await Promise.all(imagePromises)).map((mod) => mod.de
         <h3>ETIQUETAS</h3>
         <ul class="tags-list">
           {entry.data.tags.map(tag => (
-            <li><a href={`/tags/${tag}`}>{tag.toUpperCase()}</a></li>
+            <li><a href={`/${tag.toLowerCase()}`}>{tag.toUpperCase()}</a></li>
           ))}
         </ul>
       </div>
+
+      <!-- ===== INICIO DEL CÓDIGO CORREGIDO (MOVIDO AQUÍ) ===== -->
+      {entry.data.externalUrl && (
+        <div class="visit-link-container">
+          <a href={entry.data.externalUrl} class="visit-button" target="_blank" rel="noopener noreferrer">
+            Visitar {displayUrl}
+          </a>
+        </div>
+      )}
+      <!-- ===== FIN DEL CÓDIGO CORREGIDO ===== -->
+
     </div>
 
     <!-- ===== COLUMNA DERECHA (TEXTO) ===== -->
