@@ -1,5 +1,6 @@
 // src/content/config.ts
 import { defineCollection, z } from 'astro:content';
+import path from 'node:path'; // <-- Importa 'path' de Node
 
 const blogCollection = defineCollection({
   type: 'content',

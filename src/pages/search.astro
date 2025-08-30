@@ -1,0 +1,128 @@
+---
+// src/pages/search.astro (VERSIÓN SSR)
+import Layout from "../layouts/main/Layout.astro";
+import PostCard from "../components/PostCard/PostCard.astro";
+import Fuse from "fuse.js";
+import SearchBar from "../components/SearchBar/SearchBar.astro";
+
+// 2. Obtenemos el término de búsqueda desde la URL en el servidor
+const searchTerm = Astro.url.searchParams.get("q")?.trim() || "";
+
+let finalResults: any[] = [];
+
+// 3. Si hay un término de búsqueda, ejecutamos la lógica de Fuse.js
+if (searchTerm) {
+  // Obtenemos los datos directamente desde la API (en el servidor)
+  const response = await fetch(new URL("/api/search.json", Astro.url.origin));
+  const allPosts = await response.json();
+
+  // La misma configuración de Fuse que ya tenías
+  const fuseOptions = {
+    threshold: 0.4,
+    minMatchCharLength: 2,
+    keys: [
+      { name: "title", weight: 10 },
+      { name: "tags", weight: 5 },
+      { name: "description", weight: 2 },
+    ],
+  };
+
+  const fuse = new Fuse(allPosts, fuseOptions);
+
+  // Fuse devuelve { item: post, ... }, solo nos interesa el 'item'
+  finalResults = fuse.search(searchTerm).map((result) => result.item);
+}
+---
+
+<Layout
+  title={`Resultados para: ${searchTerm}`}
+  description={`Resultados de búsqueda para ${searchTerm}`}
+>
+  <div class="search-results-container">
+    <SearchBar size="small" />
+
+    <h1>
+      {searchTerm ? `Resultados para: "${searchTerm}"` : "Realiza una búsqueda"}
+    </h1>
+
+    {
+      searchTerm && finalResults.length > 0 && (
+        <div class="posts-grid">
+          {finalResults.map((post) => (
+            // CAMBIO CLAVE AQUÍ: Pasamos 'slug' y 'data' como props separadas
+            <PostCard
+              slug={post.slug}
+              data={{
+                title: post.title,
+                description: post.description,
+                pubDate: new Date(post.pubDate),
+                tags: post.tags,
+                externalUrl: post.externalUrl,
+                coverImage: post.coverImage,
+                author: post.author,
+              }}
+            />
+          ))}
+        </div>
+      )
+    }
+
+    {/* Lógica de mensajes de 'no resultados' simplificada */}
+    {
+      searchTerm && finalResults.length === 0 && (
+        <p class="no-results">
+          No se encontraron artículos que coincidan con tu búsqueda. ¡Intenta
+          con otras palabras!
+        </p>
+      )
+    }
+    {
+      !searchTerm && (
+        <p class="no-results">
+          Escribe algo en la barra de búsqueda para encontrar artículos.
+        </p>
+      )
+    }
+  </div>
+</Layout>
+
+<!-- 5. Añadimos los estilos para el layout de esta página -->
+<style lang="scss">
+  @use "../styles/variables" as var;
+
+  .search-results-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    min-height: 50vh; // Para que el mensaje de "no hay resultados" no quede pegado arriba
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    text-transform: uppercase;
+    color: #fff;
+    word-break: break-all; // Para términos de búsqueda largos
+  }
+
+  .no-results {
+    color: #ccc;
+    text-align: center;
+    font-size: 1.2rem;
+    padding: 2rem;
+    background-color: #2a2a2a;
+    border-radius: 12px;
+  }
+
+  /* Los estilos de .posts-grid y .post-card ya no son necesarios aquí,
+     porque están encapsulados dentro de PostCard.astro.
+     Solo necesitamos la cuadrícula principal. */
+  .posts-grid {
+    display: grid;
+    gap: 1.5rem;
+    /* La magia del grid responsivo */
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+</style>

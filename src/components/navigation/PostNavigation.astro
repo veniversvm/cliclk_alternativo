@@ -1,0 +1,115 @@
+---
+// src/components/navigation/PostNavigation.astro
+import { Icon } from 'astro-icon/components';
+
+interface PostLink {
+  slug: string;
+  title: string;
+}
+
+// --- CAMBIO 1: Añadimos las nuevas props opcionales ---
+interface Props {
+  previousPost?: PostLink | null;
+  nextPost?: PostLink | null;
+  externalUrl?: string | null;
+  displayUrl?: string | null;
+  currentTag?: string | null;
+}
+
+const { previousPost, nextPost, externalUrl, displayUrl, currentTag } = Astro.props;
+---
+
+<nav class="post-navigation">
+  <!-- Botón de Post Anterior (sin cambios) -->
+  {previousPost ? (
+    <a href={`/${currentTag}/${previousPost.slug}/`}  class="arrow-button" aria-label={`Ir al post anterior: ${previousPost.title}`}>
+      <Icon name="mdi:arrow-left-bold" />
+    </a>
+  ) : (
+    <span class="arrow-button disabled" aria-disabled="true">
+      <Icon name="mdi:arrow-left-bold" />
+    </span>
+  )}
+
+  <!-- --- CAMBIO 2: El botón central ahora es dinámico --- -->
+  {externalUrl && displayUrl ? (
+    // Si hay un enlace externo, muestra el botón "Visitar"
+    <a href={externalUrl} class="center-button" target="_blank" rel="noopener noreferrer">
+      Visitar {displayUrl}
+    </a>
+  ) : (
+    // Si NO hay enlace, muestra el botón "Volver"
+    <button class="center-button" onclick="history.back()" aria-label="Volver a la página anterior">
+      Volver
+    </button>
+  )}
+
+  <!-- Botón de Post Siguiente (sin cambios) -->
+  {nextPost ? (
+    <a href={`/${currentTag}/${nextPost.slug}/`} class="arrow-button" aria-label={`Ir al post siguiente: ${nextPost.title}`}>
+      <Icon name="mdi:arrow-right-bold" />
+    </a>
+  ) : (
+    <span class="arrow-button disabled" aria-disabled="true">
+      <Icon name="mdi:arrow-right-bold" />
+    </span>
+  )}
+</nav>
+
+<style lang="scss">
+  @use '../../styles/variables' as var;
+
+  .post-navigation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 2rem 0;
+    /* Quitamos el borde superior para que se integre mejor en la columna visual */
+  }
+
+  /* --- CAMBIO 3: Renombramos .back-button a .center-button para más claridad --- */
+  .center-button {
+    background-color: var.$primary-color;
+    color: #121212;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-decoration: none; /* Para el caso de que sea un <a> */
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    text-align: center; /* Asegura que el texto esté centrado */
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+
+  .arrow-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    background-color: var.$primary-color;
+    border-radius: 50%;
+    color: #121212;
+    text-decoration: none;
+    font-size: 1.5rem;
+    transition: transform 0.2s ease;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+
+    &.disabled {
+      background-color: #3a3a3a;
+      cursor: not-allowed;
+      opacity: 0.5;
+      pointer-events: none;
+    }
+  }
+</style>

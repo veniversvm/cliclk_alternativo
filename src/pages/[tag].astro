@@ -1,11 +1,12 @@
 ---
-// src/pages/[tag].astro
-
-// --- FRONTMATTER (Tu lógica está perfecta, no se cambia nada aquí) ---
-import { getCollection } from "astro:content";
+// src/pages/[tag].astro (Versión Final - Muestra Todos los Posts)
 import Layout from "../layouts/main/Layout.astro";
-import { Image } from "astro:assets";
+import PostCard from "../components/PostCard/PostCard.astro";
+import SearchBar from "../components/SearchBar/SearchBar.astro";
+import { getCollection } from "astro:content";
 import { dirname } from "node:path";
+
+export const prerender = true;
 
 export async function getStaticPaths() {
   const sectionTags = [
@@ -17,6 +18,9 @@ export async function getStaticPaths() {
 }
 
 const { tag } = Astro.params;
+
+// 1. Obtenemos todos los posts, los filtramos por etiqueta y los ordenamos.
+//    No hay .slice() ni límites. Usamos la lista completa.
 const allPosts = await getCollection("blog");
 const filteredPosts = allPosts.filter((post) =>
   post.data.tags.map((t) => t.toLowerCase()).includes(tag!.toLowerCase()),
@@ -24,84 +28,43 @@ const filteredPosts = allPosts.filter((post) =>
 const sortedPosts = filteredPosts.sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
-const latestPosts = sortedPosts.slice(0, 5);
+
 const pageTitle = tag!.charAt(0).toUpperCase() + tag!.slice(1);
 
+// 2. Procesamos las imágenes para TODOS los posts filtrados y ordenados.
 const allImages = await import.meta.glob(
   "/src/content/blog/**/*.{jpeg,jpg,png,gif,webp,svg}",
 );
-
 const postsWithImages = await Promise.all(
-  latestPosts.map(async (post) => {
+  sortedPosts.map(async (post) => { // <-- Usamos 'sortedPosts' aquí
     const postDir = dirname(post.id);
     const searchPath = `/src/content/blog/${postDir}/`.toLowerCase();
     const imagePath = Object.keys(allImages).find((path) =>
       path.toLowerCase().startsWith(searchPath),
     );
-
     let coverImage = null;
     if (imagePath) {
       const imageModule = (await allImages[imagePath]()) as any;
       coverImage = imageModule.default;
     }
-
-    return {
-      ...post,
-      data: {
-        ...post.data,
-        coverImage: coverImage,
-      },
-    };
+    return { ...post, data: { ...post.data, coverImage } };
   }),
 );
 ---
 
-<!-- El HTML solo debe estar UNA VEZ -->
 <Layout
   title={`Sección: ${pageTitle}`}
-  description={`Últimas 5 entradas sobre ${pageTitle} en Click Alternativo.`}
+  description={`Todas las entradas sobre ${pageTitle} en Click Alternativo.`}
 >
   <div class="section-container">
     <h1>Artículos sobre: <span>{pageTitle}</span></h1>
+    <SearchBar size="small" />
 
     {postsWithImages.length > 0 ? (
       <div class="posts-grid">
+        {/* 3. Mapeamos la lista completa de 'postsWithImages' */}
         {postsWithImages.map(post => (
-          <div class="post-card">
-            <a href={`/blog/${post.slug}/`} class="card-image-link" aria-label={`Leer más sobre ${post.data.title}`}>
-              {post.data.coverImage ? (
-                <Image
-                  src={post.data.coverImage}
-                  alt={`Imagen de portada para ${post.data.title}`}
-                  widths={[240, 540, 720]}
-                  sizes={`(min-width: 768px) 33vw, 80px`}
-                  format="webp"
-                  quality={"high"}
-                  class="card-image"
-                />
-              ) : (
-                <div class="image-placeholder"></div>
-              )}
-            </a>
-            <div class="card-content">
-              <a href={`/blog/${post.slug}/`} class="card-title-link">
-                <h2>{post.data.title}</h2>
-              </a>
-              <p>{post.data.description}</p>
-              <time datetime={post.data.pubDate.toISOString()}>
-                {new Date(post.data.pubDate).toLocaleDateString('es-ES', {
-                  year: 'numeric', month: 'long', day: 'numeric',
-                })}
-              </time>
-              {post.data.externalUrl && (
-                <div class="external-link-wrapper">
-                  <a href={post.data.externalUrl} class="external-button" target="_blank" rel="noopener noreferrer">
-                    Visitar Página →
-                  </a>
-                </div>
-              )}
-            </div>
-          </div>
+          <PostCard slug={post.slug} data={post.data} />
         ))}
       </div>
     ) : (
@@ -110,11 +73,14 @@ const postsWithImages = await Promise.all(
   </div>
 </Layout>
 
-<!-- --- ESTILOS SCSS CORREGIDOS --- -->
+<!-- 4. NO hay <script> para el scroll infinito. Lo hemos eliminado. -->
+
+<!-- El bloque de estilos se mantiene para que todo se vea bien -->
 <style lang="scss">
   @use '../styles/variables' as var;
+  @use 'sass:color';
 
-  /* --- Estilos Generales --- */
+  /* Estilos generales de la página */
   .section-container {
     width: 100%;
     max-width: 1200px;
@@ -133,13 +99,13 @@ const postsWithImages = await Promise.all(
     }
   }
 
-  /* --- Estilos base (Móvil) --- */
   .posts-grid {
-    display: flex;
-    flex-direction: column;
+    display: grid;
     gap: 1.5rem;
+    grid-template-columns: 1fr;
   }
 
+  /* Estilos de la tarjeta */
   .post-card {
     display: flex;
     gap: 1rem;
@@ -149,14 +115,13 @@ const postsWithImages = await Promise.all(
     padding: 1rem;
     transition: border-color 0.2s ease;
 
-    &:hover {
-      border-color: #555;
-    }
+    &:hover { border-color: #555; }
   }
 
   .card-image-link { flex-shrink: 0; }
   .card-image, .image-placeholder {
     width: 80px; height: 80px; object-fit: cover; border-radius: 8px;
+    background-color: #333;
   }
   
   .card-content {
@@ -169,18 +134,16 @@ const postsWithImages = await Promise.all(
       font-size: 1.25rem; margin: 0 0 0.5rem 0; color: var.$primary-color; transition: color 0.2s ease;
     }
     &:hover h2 {
-      color: lighten(var.$primary-color, 15%);
+      color: color.adjust(var.$primary-color, $lightness: 15%);
     }
   }
 
   .card-content p {
     font-size: 0.9rem; color: #ccc; margin: 0; line-height: 1.5;
   }
-
   .card-content time {
     font-size: 0.8rem; color: #aaa; margin-top: 0.5rem;
   }
-  
   .external-link-wrapper { margin-top: 0.75rem; }
   .external-button {
     display: inline-block; background-color: #333; color: var.$primary-color; text-decoration: none;
@@ -191,22 +154,18 @@ const postsWithImages = await Promise.all(
     }
   }
 
-  /* --- Estilos para Tablet y Superior (LA CUADRÍCULA) --- */
+  /* Media query para la cuadrícula y las tarjetas en pantallas más grandes */
   @media (min-width: 768px) {
-    /* AQUÍ SE DEFINE LA CUADRÍCULA PARA PC */
     .posts-grid {
-      display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     }
 
     .post-card {
       flex-direction: column; padding: 0;
     }
-
     .card-image, .image-placeholder {
       width: 100%; height: auto; aspect-ratio: 16 / 10; border-radius: 12px 12px 0 0;
     }
-    
     .card-content { padding: 1.5rem; }
     .card-title-link h2 { font-size: 1.5rem; }
     .card-content p { font-size: 1rem; }

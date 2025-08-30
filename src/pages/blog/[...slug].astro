@@ -1,15 +1,21 @@
 ---
+// src/pages/blog/[slug].astro
+// Versión restaurada, simple y sin el componente PostNavigation.
+
 import type { GetStaticPaths } from 'astro';
 import type { CollectionEntry } from 'astro:content';
 import { getCollection } from 'astro:content';
-import { dirname } from 'node:path'; // <-- Importamos una utilidad de Node para manejar rutas
+import { dirname } from 'node:path';
 import Layout from '../../layouts/main/Layout.astro';
 import Carousel from '../../components/carousel/Carousel.astro'; 
 import '../../styles/blogpost.scss';
 
-// El import.meta.glob es correcto, pero lo tipamos para más seguridad
+export const prerender = true;
+
 const allImages = import.meta.glob<{ default: ImageMetadata }>('/src/content/blog/**/*.{jpeg,jpg,png,webp,svg}');
 
+// 1. Volvemos al getStaticPaths original y simple.
+//    Solo crea una página por cada post, sin lógica de navegación.
 export const getStaticPaths: GetStaticPaths = async () => {
   const entries = await getCollection('blog');
   return entries.map((entry) => ({
@@ -18,36 +24,25 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }));
 };
 
+// 2. La interface Props solo necesita 'entry'.
 interface Props {
   entry: CollectionEntry<'blog'>;
 }
+// Solo recogemos 'entry' de los props.
 const { entry } = Astro.props;
 const { Content } = await entry.render();
 
-// --- LA MAGIA ESTÁ AQUÍ ---
-
-// 1. Obtenemos el directorio del post usando su 'id'
-//    - entry.id para tu post es: "spotify/spotify.mdx"
-//    - dirname(entry.id) nos devuelve: "spotify"  <-- ¡Justo lo que necesitamos!
+// La lógica para las imágenes y el displayUrl se mantiene.
 const postDir = dirname(entry.id);
-
-// 2. Creamos la ruta de filtro correcta
 const filterPath = `/src/content/blog/${postDir}/`;
-
-// 3. Filtramos las imágenes usando la ruta correcta
 const imagePromises = Object.entries(allImages)
   .filter(([path]) => path.startsWith(filterPath))
   .map(([, importer]) => importer());
-
-// 4. Esperamos a que se carguen las imágenes
 const currentPostImages = (await Promise.all(imagePromises)).map((mod) => mod.default);
 
-//  --- LÓGICA PARA EL TEXTO DEL BOTÓN ---
-// Extraemos el nombre del dominio para mostrar un texto más limpio
 const displayUrl = entry.data.externalUrl 
   ? new URL(entry.data.externalUrl).hostname.replace(/^www\./, '') 
   : '';
-
 ---
 
 <Layout title={entry.data.title} description={entry.data.description}>
@@ -69,9 +64,11 @@ const displayUrl = entry.data.externalUrl
             <li><a href={`/${tag.toLowerCase()}`}>{tag.toUpperCase()}</a></li>
           ))}
         </ul>
+        
       </div>
 
-      <!-- ===== INICIO DEL CÓDIGO CORREGIDO (MOVIDO AQUÍ) ===== -->
+      <!-- 3. Aquí reintroducimos el botón original "Visitar {sitio}" -->
+            <!-- 3. Aquí reintroducimos el botón original "Visitar {sitio}" -->
       {entry.data.externalUrl && (
         <div class="visit-link-container">
           <a href={entry.data.externalUrl} class="visit-button" target="_blank" rel="noopener noreferrer">
@@ -79,7 +76,13 @@ const displayUrl = entry.data.externalUrl
           </a>
         </div>
       )}
-      <!-- ===== FIN DEL CÓDIGO CORREGIDO ===== -->
+
+      <!-- ===== NUEVO BOTÓN PARA REGRESAR ===== -->
+      <div class="back-button-container">
+        <button class="back-button" onclick="history.back()">
+          Regresar
+        </button>
+      </div>
 
     </div>
 
@@ -102,5 +105,6 @@ const displayUrl = entry.data.externalUrl
         <Content />
       </div>
     </div>
+    
   </article>
 </Layout>
