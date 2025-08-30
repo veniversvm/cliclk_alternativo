@@ -6,6 +6,8 @@ import { getCollection } from "astro:content";
 import Layout from "../layouts/main/Layout.astro";
 import { Image } from "astro:assets";
 import { dirname } from "node:path";
+import PostCard from "../components/PostCard/PostCard.astro";
+export const prerender = true;
 
 export async function getStaticPaths() {
   const sectionTags = [
@@ -67,41 +69,8 @@ const postsWithImages = await Promise.all(
     {postsWithImages.length > 0 ? (
       <div class="posts-grid">
         {postsWithImages.map(post => (
-          <div class="post-card">
-            <a href={`/blog/${post.slug}/`} class="card-image-link" aria-label={`Leer más sobre ${post.data.title}`}>
-              {post.data.coverImage ? (
-                <Image
-                  src={post.data.coverImage}
-                  alt={`Imagen de portada para ${post.data.title}`}
-                  widths={[240, 540, 720]}
-                  sizes={`(min-width: 768px) 33vw, 80px`}
-                  format="webp"
-                  quality={"high"}
-                  class="card-image"
-                />
-              ) : (
-                <div class="image-placeholder"></div>
-              )}
-            </a>
-            <div class="card-content">
-              <a href={`/blog/${post.slug}/`} class="card-title-link">
-                <h2>{post.data.title}</h2>
-              </a>
-              <p>{post.data.description}</p>
-              <time datetime={post.data.pubDate.toISOString()}>
-                {new Date(post.data.pubDate).toLocaleDateString('es-ES', {
-                  year: 'numeric', month: 'long', day: 'numeric',
-                })}
-              </time>
-              {post.data.externalUrl && (
-                <div class="external-link-wrapper">
-                  <a href={post.data.externalUrl} class="external-button" target="_blank" rel="noopener noreferrer">
-                    Visitar Página →
-                  </a>
-                </div>
-              )}
-            </div>
-          </div>
+          // CAMBIO CLAVE AQUÍ TAMBIÉN:
+          <PostCard slug={post.slug} data={post.data} />
         ))}
       </div>
     ) : (
@@ -109,7 +78,6 @@ const postsWithImages = await Promise.all(
     )}
   </div>
 </Layout>
-
 <!-- --- ESTILOS SCSS CORREGIDOS --- -->
 <style lang="scss">
   @use '../styles/variables' as var;

@@ -7,6 +7,8 @@ import Layout from '../../layouts/main/Layout.astro';
 import Carousel from '../../components/carousel/Carousel.astro'; 
 import '../../styles/blogpost.scss';
 
+export const prerender = true;
+
 // El import.meta.glob es correcto, pero lo tipamos para más seguridad
 const allImages = import.meta.glob<{ default: ImageMetadata }>('/src/content/blog/**/*.{jpeg,jpg,png,webp,svg}');
 
