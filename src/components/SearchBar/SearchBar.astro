@@ -1,37 +1,39 @@
 ---
-// src/components/SearchBar/SearchBar.astro (VERSIÓN SIMPLIFICADA Y A PRUEBA DE ERRORES)
-import { Icon } from 'astro-icon/components';
+// src/components/SearchBar/SearchBar.astro
+
+// 1. Definimos las props que el componente puede aceptar.
+//    'size' será opcional y podrá ser 'small' o 'large'.
+interface Props {
+  size?: 'small' | 'large';
+}
+
+// 2. Si no se pasa la prop 'size', por defecto será 'large'.
+const { size = 'large' } = Astro.props;
 ---
 
-<div class="search-wrapper">
-  <!-- 
-    Esta es la parte más importante. 
-    action="/search" -> Envía los datos a la página de búsqueda.
-    method="get" -> Pone los datos en la URL.
-  -->
+<!-- 3. Usamos la directiva class:list para añadir una clase CSS
+     dinámicamente si el tamaño es 'small'. Esto nos permitirá
+     aplicar estilos específicos. -->
+<div class:list={["search-wrapper", { "search-wrapper--small": size === 'small' }]}>
   <form class="search-form" action="/search" method="get">
-    
     <input
       type="search"
       name="q" 
-      placeholder="Buscar artículos..."
+      placeholder="Buscar en el sitio..."
       aria-label="Campo de búsqueda"
       class="search-input"
     />
-
     <button type="submit" class="search-button" aria-label="Buscar">
-  🔍
-</button>
-
-
+      🔍
+    </button>
   </form>
 </div>
 
 <style lang="scss">
-  // 1. Añadimos la importación del módulo de color.
   @use 'sass:color';
   @use '../../styles/variables' as var;
 
+  /* --- ESTILOS BASE (GRANDE - POR DEFECTO) --- */
   .search-wrapper {
     display: flex;
     justify-content: center;
@@ -47,17 +49,16 @@ import { Icon } from 'astro-icon/components';
     background-color: #fff;
     border-radius: 9999px; // Píldora
     border: 2px solid var.$primary-color;
-    overflow: hidden; // Asegura que los bordes redondeados se apliquen a los hijos
+    overflow: hidden;
     transition: box-shadow 0.2s ease;
 
     &:focus-within {
-      // Efecto de brillo cuando el formulario está activo
       box-shadow: 0 0 0 3px rgba(var.$primary-color, 0.5);
     }
   }
 
   .search-input {
-    flex-grow: 1; // El input ocupa todo el espacio disponible
+    flex-grow: 1;
     height: 48px;
     padding: 0 1.25rem;
     border: none;
@@ -69,15 +70,12 @@ import { Icon } from 'astro-icon/components';
       color: #888;
       opacity: 1;
     }
-
-    // Oculta la 'x' por defecto de los inputs de búsqueda
     &::-webkit-search-decoration,
     &::-webkit-search-cancel-button {
       -webkit-appearance: none;
     }
-
     &:focus {
-      outline: none; // Quitamos el borde azul por defecto
+      outline: none;
     }
   }
 
@@ -95,8 +93,33 @@ import { Icon } from 'astro-icon/components';
     transition: background-color 0.2s ease;
 
     &:hover {
-      // 2. Reemplazamos lighten() por color.adjust().
       background-color: color.adjust(var.$primary-color, $lightness: 10%);
+    }
+  }
+
+
+  /* --- 4. ESTILOS PARA LA VERSIÓN PEQUEÑA --- */
+  /*    Estos estilos se aplicarán solo cuando el wrapper
+        tenga la clase 'search-wrapper--small'. */
+  
+  .search-wrapper--small {
+    padding: 2rem 0; // Le damos un poco más de aire vertical
+    
+    .search-form {
+      max-width: 400px; // Un poco más angosto
+      border-width: 1px; // Un borde más sutil
+    }
+
+    .search-input {
+      height: 40px; // Menos alto
+      font-size: 0.9rem; // Texto más pequeño
+      padding: 0 1rem;
+    }
+
+    .search-button {
+      width: 50px; // Botón más pequeño
+      height: 40px;
+      font-size: 1.1rem; // Emoji un poco más pequeño
     }
   }
 </style>

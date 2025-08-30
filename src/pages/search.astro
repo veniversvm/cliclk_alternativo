@@ -3,6 +3,7 @@
 import Layout from "../layouts/main/Layout.astro";
 import PostCard from "../components/PostCard/PostCard.astro";
 import Fuse from "fuse.js";
+import SearchBar from "../components/SearchBar/SearchBar.astro";
 
 // 2. Obtenemos el término de búsqueda desde la URL en el servidor
 const searchTerm = Astro.url.searchParams.get("q")?.trim() || "";
@@ -38,43 +39,50 @@ if (searchTerm) {
   description={`Resultados de búsqueda para ${searchTerm}`}
 >
   <div class="search-results-container">
+    <SearchBar size="small" />
+
     <h1>
       {searchTerm ? `Resultados para: "${searchTerm}"` : "Realiza una búsqueda"}
     </h1>
 
-    {searchTerm && finalResults.length > 0 && (
-      <div class="posts-grid">
-        {finalResults.map((post) => (
-          // CAMBIO CLAVE AQUÍ: Pasamos 'slug' y 'data' como props separadas
-          <PostCard
-            slug={post.slug}
-            data={{
-              title: post.title,
-              description: post.description,
-              pubDate: new Date(post.pubDate),
-              tags: post.tags,
-              externalUrl: post.externalUrl,
-              coverImage: post.coverImage,
-              author: post.author,
-            }}
-          />
-        ))}
-      </div>
-    )}
-    
+    {
+      searchTerm && finalResults.length > 0 && (
+        <div class="posts-grid">
+          {finalResults.map((post) => (
+            // CAMBIO CLAVE AQUÍ: Pasamos 'slug' y 'data' como props separadas
+            <PostCard
+              slug={post.slug}
+              data={{
+                title: post.title,
+                description: post.description,
+                pubDate: new Date(post.pubDate),
+                tags: post.tags,
+                externalUrl: post.externalUrl,
+                coverImage: post.coverImage,
+                author: post.author,
+              }}
+            />
+          ))}
+        </div>
+      )
+    }
+
     {/* Lógica de mensajes de 'no resultados' simplificada */}
-    {searchTerm && finalResults.length === 0 && (
-       <p class="no-results">
-        No se encontraron artículos que coincidan con tu búsqueda. ¡Intenta
-        con otras palabras!
-      </p>
-    )}
-    {!searchTerm && (
-       <p class="no-results">
-        Escribe algo en la barra de búsqueda para encontrar artículos.
-      </p>
-    )}
-    
+    {
+      searchTerm && finalResults.length === 0 && (
+        <p class="no-results">
+          No se encontraron artículos que coincidan con tu búsqueda. ¡Intenta
+          con otras palabras!
+        </p>
+      )
+    }
+    {
+      !searchTerm && (
+        <p class="no-results">
+          Escribe algo en la barra de búsqueda para encontrar artículos.
+        </p>
+      )
+    }
   </div>
 </Layout>
 

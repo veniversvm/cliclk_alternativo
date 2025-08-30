@@ -1,56 +1,61 @@
 // src/styles/global.scss
+
+// La regla @use SIEMPRE debe ir primero.
 @use 'variables' as var;
 
+// --- ¡AQUÍ ESTÁ EL CAMBIO! ---
+// Importamos Poppins en lugar de Montserrat.
+// Nos aseguramos de pedir los mismos pesos (400 para normal, 700 para negrita).
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
 // --- VARIABLES GLOBALES CSS ---
-// Usar variables CSS nativas es una excelente práctica para compartir valores entre SCSS y JS si es necesario.
 :root {
   --sidebar-width: 280px;
 }
 
 // --- RESET Y ESTILOS BASE ---
-// Aplicamos estilos a html y body para asegurar un comportamiento predecible en todos los navegadores.
-
 html {
-  box-sizing: border-box; // Un reset moderno y útil.
-   overflow-x: hidden; // <-- AÑADE ESTA LÍNEA
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 *, *:before, *:after {
   box-sizing: inherit;
 }
 
-// En tu archivo src/styles/global.scss
-
 body {
   margin: 0;
   min-height: 100dvh;
-  // max-height: 100vh; // Esto puede causar problemas si el contenido es más alto que la pantalla. Considera quitarlo.
   width: 100%;
-   overflow-x: hidden; // <-- AÑADE ESTA LÍNEA TAMBIÉN POR SEGURIDAD
+  overflow-x: hidden;
 
-  font-family: var.$font-family;
+  font-family: var.$font-family-display; 
   color: white; 
-
   background-color: var.$secondary-color;
-  // background-image: url('../assets/BackgroundWeb/Background.png');
-  background-color: 1E1E1E;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
-
-  // --- 👇 AÑADE ESTAS DOS LÍNEAS ---
   display: flex;
   flex-direction: column;
 }
 
-// --- 👇 AÑADE ESTA NUEVA REGLA PARA MAIN ---
 main {
-  flex-grow: 1; // ¡Esta es la clave! Le dice a <main> que crezca y ocupe todo el espacio vertical disponible.
-
-  // Opcional, pero recomendado para centrar el contenido dentro del main:
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center; // Centra el contenido verticalmente
-  align-items: center;    // Centra el contenido horizontalmente
+  justify-content: center;
+  align-items: center;    
+}
+
+// --- MEDIA QUERY PARA APLICAR LA NUEVA FUENTE EN PC ---
+// Esta lógica no necesita cambiar, ya que lee la variable que modificamos.
+@media (min-width: 1024px) {
+  body {
+    font-family: var.$font-family-body-pc;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var.$font-family-display;
+  }
 }

@@ -1,24 +1,24 @@
 ---
 // src/components/PostCard/PostCard.astro
+// Versión restaurada para funcionar con la ruta /blog/[slug]
+
 import { Image } from "astro:assets";
-// 1. Importamos el tipo de la 'data' de nuestra colección, no la entrada completa.
 import type { CollectionEntry } from "astro:content";
 
-// 2. Definimos un tipo para la 'data' que esperamos, incluyendo nuestra 'coverImage'
+// La definición de tipos se mantiene igual
 type PostData = CollectionEntry<'blog'>['data'] & { coverImage: any };
 
-// 3. CAMBIO CLAVE: En lugar de una prop 'post', pedimos 'slug' y 'data' por separado.
-// Esto desacopla el componente del objeto 'CollectionEntry' completo.
 interface Props {
   slug: string;
   data: PostData;
 }
 
 const { slug, data } = Astro.props;
+// --- CAMBIO 1: Hemos eliminado la variable 'primaryTag' que ya no es necesaria ---
 ---
 
-<!-- 4. Ahora usamos 'slug' y 'data' directamente, en lugar de 'post.slug' y 'post.data' -->
 <div class="post-card">
+  <!-- --- CAMBIO 2: El enlace ahora apunta a /blog/[slug] --- -->
   <a href={`/blog/${slug}/`} class="card-image-link" aria-label={`Leer más sobre ${data.title}`}>
     {data.coverImage ? (
       <Image
@@ -35,6 +35,7 @@ const { slug, data } = Astro.props;
     )}
   </a>
   <div class="card-content">
+    <!-- --- CAMBIO 2: El enlace ahora apunta a /blog/[slug] --- -->
     <a href={`/blog/${slug}/`} class="card-title-link">
       <h2>{data.title}</h2>
     </a>
@@ -54,10 +55,10 @@ const { slug, data } = Astro.props;
   </div>
 </div>
 
-<!-- Copiamos los estilos EXACTOS de la tarjeta aquí para encapsularlos -->
+<!-- Los estilos están completos y no necesitan cambios -->
 <style lang="scss">
   @use '../../styles/variables' as var;
-  @use 'sass:color'; // Corregimos la advertencia de una vez
+  @use 'sass:color';
 
   .post-card {
     display: flex;
@@ -74,7 +75,7 @@ const { slug, data } = Astro.props;
   .card-image-link { flex-shrink: 0; }
   .card-image, .image-placeholder {
     width: 80px; height: 80px; object-fit: cover; border-radius: 8px;
-    background-color: #333; // Color para el placeholder
+    background-color: #333;
   }
   
   .card-content {
