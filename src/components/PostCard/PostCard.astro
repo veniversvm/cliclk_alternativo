@@ -1,12 +1,10 @@
 ---
-// src/components/PostCard/PostCard.astro
+// src/components/Post-Card/PostCard.astro
 
-// --- CAMBIO 1: Ya no necesitamos importar 'Image' ---
-// import { Image } from "astro:assets"; 
 import type { CollectionEntry } from "astro:content";
+import type { ImageMetadata } from "astro";
 
-// La definición de tipos se mantiene, pero 'coverImage' ahora será un string (el nombre del archivo)
-type PostData = CollectionEntry<'blog'>['data'] & { coverImage: string };
+type PostData = CollectionEntry<'blog'>['data'] & { coverImage?: ImageMetadata | null };
 
 interface Props {
   slug: string;
@@ -15,19 +13,12 @@ interface Props {
 
 const { slug, data } = Astro.props;
 
-// --- CAMBIO 2: Construimos la URL pública de la imagen ---
-// Esta es la misma lógica que usamos en el generador de search.json y en la página de búsqueda.
-// Asume que 'data.coverImage' es solo el nombre del archivo (ej: "portada.jpg").
-const imageUrl = data.coverImage
-  ? `/images/blog/${slug}/${data.coverImage}`
-  : null;
+const imageUrl = data.coverImage ? data.coverImage.src : null;
 ---
 
 <div class="post-card">
-  <!-- El enlace ahora usa la URL de la página del blog correcta: /blog/[slug]/[slug] -->
   <a href={`/blog/${slug}`} class="card-image-link" aria-label={`Leer más sobre ${data.title}`}>
     
-    <!-- --- CAMBIO 3: Reemplazamos <Image> por <img> --- -->
     {imageUrl ? (
       <img
         src={imageUrl}
@@ -41,13 +32,12 @@ const imageUrl = data.coverImage
     )}
   </a>
   <div class="card-content">
-    <!-- El enlace del título también debe apuntar a la URL correcta -->
     <a href={`/blog/${slug}`} class="card-title-link">
       <h2>{data.title}</h2>
     </a>
     <p>{data.description}</p>
     <time datetime={data.pubDate.toISOString()}>
-      {new Date(data.pubDate).toLocaleDateString('es-ES', {
+      {new Date(data.pubDate).toLocaleString('es-ES', {
         year: 'numeric', month: 'long', day: 'numeric',
       })}
     </time>
