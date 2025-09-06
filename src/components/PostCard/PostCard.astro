@@ -1,12 +1,12 @@
 ---
 // src/components/PostCard/PostCard.astro
-// Versión restaurada para funcionar con la ruta /blog/[slug]
 
-import { Image } from "astro:assets";
+// --- CAMBIO 1: Ya no necesitamos importar 'Image' ---
+// import { Image } from "astro:assets"; 
 import type { CollectionEntry } from "astro:content";
 
-// La definición de tipos se mantiene igual
-type PostData = CollectionEntry<'blog'>['data'] & { coverImage: any };
+// La definición de tipos se mantiene, pero 'coverImage' ahora será un string (el nombre del archivo)
+type PostData = CollectionEntry<'blog'>['data'] & { coverImage: string };
 
 interface Props {
   slug: string;
@@ -14,29 +14,35 @@ interface Props {
 }
 
 const { slug, data } = Astro.props;
-// --- CAMBIO 1: Hemos eliminado la variable 'primaryTag' que ya no es necesaria ---
+
+// --- CAMBIO 2: Construimos la URL pública de la imagen ---
+// Esta es la misma lógica que usamos en el generador de search.json y en la página de búsqueda.
+// Asume que 'data.coverImage' es solo el nombre del archivo (ej: "portada.jpg").
+const imageUrl = data.coverImage
+  ? `/images/blog/${slug}/${data.coverImage}`
+  : null;
 ---
 
 <div class="post-card">
-  <!-- --- CAMBIO 2: El enlace ahora apunta a /blog/[slug] --- -->
-  <a href={`/blog/${slug}/`} class="card-image-link" aria-label={`Leer más sobre ${data.title}`}>
-    {data.coverImage ? (
-      <Image
-        src={data.coverImage}
+  <!-- El enlace ahora usa la URL de la página del blog correcta: /blog/[slug]/[slug] -->
+  <a href={`/blog/${slug}`} class="card-image-link" aria-label={`Leer más sobre ${data.title}`}>
+    
+    <!-- --- CAMBIO 3: Reemplazamos <Image> por <img> --- -->
+    {imageUrl ? (
+      <img
+        src={imageUrl}
         alt={`Imagen de portada para ${data.title}`}
-        widths={[240, 540, 720]}
-        sizes={`(min-width: 768px) 33vw, 80px`}
-        format="webp"
-        quality={"high"}
         class="card-image"
+        loading="lazy"
+        decoding="async"
       />
     ) : (
       <div class="image-placeholder"></div>
     )}
   </a>
   <div class="card-content">
-    <!-- --- CAMBIO 2: El enlace ahora apunta a /blog/[slug] --- -->
-    <a href={`/blog/${slug}/`} class="card-title-link">
+    <!-- El enlace del título también debe apuntar a la URL correcta -->
+    <a href={`/blog/${slug}`} class="card-title-link">
       <h2>{data.title}</h2>
     </a>
     <p>{data.description}</p>

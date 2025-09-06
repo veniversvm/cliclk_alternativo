@@ -1,46 +1,139 @@
 ---
-// src/pages/api/search.json.ts
-import type { APIRoute } from 'astro';
-import { getCollection } from 'astro:content';
-import { dirname } from 'node:path';
+// src/components/SearchResults.astro
+import type { CollectionEntry } from "astro:content";
 
-// Obtenemos todas las imágenes una sola vez
-const allImages = await import.meta.glob(
-  "/src/content/blog/**/*.{jpeg,jpg,png,gif,webp,svg}",
-);
+interface Props {
+  results: (CollectionEntry<'blog'> & { data: { coverImage?: string } })[];
+}
+const { results } = Astro.props;
+---
 
-export const GET: APIRoute = async () => {
-  const allPosts = await getCollection('blog');
-
-  // Usamos la misma lógica que en [tag].astro para añadir la imagen de portada
-  const postsWithExtraData = await Promise.all(
-    allPosts.map(async (post) => {
-      const postDir = dirname(post.id);
-      const searchPath = `/src/content/blog/${postDir}/`.toLowerCase();
-      const imagePath = Object.keys(allImages).find((path) =>
-        path.toLowerCase().startsWith(searchPath),
+{results.length > 0 ? (
+  <div class="posts-grid">
+    {results.map(post => {
+      const imageUrl = post.data.coverImage
+        ? `/images/blog/${post.slug}/${post.data.coverImage}`
+        : null;
+      return (
+        <div class="post-card">
+          <a href={`/blog/${post.slug}/`} class="card-image-link" aria-label={`Leer más sobre ${post.data.title}`}>
+            {imageUrl ? (
+              <img
+                src={imageUrl}
+                alt={`Imagen de portada para ${post.data.title}`}
+                class="card-image"
+                loading="lazy"
+                decoding="async"
+              />
+            ) : (
+              <div class="image-placeholder"></div>
+            )}
+          </a>
+          <div class="card-content">
+            <a href={`/blog/${post.slug}/`} class="card-title-link">
+              <h2>{post.data.title}</h2>
+            </a>
+            <p>{post.data.description}</p>
+            <time datetime={post.data.pubDate.toISOString()}>
+              {new Date(post.data.pubDate).toLocaleDateString('es-ES', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              })}
+            </time>
+            {post.data.externalUrl && (
+              <div class="external-link-wrapper">
+                <a href={post.data.externalUrl} class="external-button" target="_blank" rel="noopener noreferrer">
+                  Visitar Página →
+                </a>
+              </div>
+            )}
+          </div>
+        </div>
       );
+    })}
+  </div>
+) : (
+  <p class="no-results">No se encontraron artículos para tu búsqueda. ¡Intenta con otras palabras!</p>
+)}
 
-      let coverImage = null;
-      if (imagePath) {
-        const imageModule = (await allImages[imagePath]()) as any;
-        coverImage = imageModule.default;
-      }
 
-      // Devolvemos un objeto plano con los datos que necesitamos para la búsqueda Y el renderizado
-      return {
-        slug: post.slug,
-        title: post.data.title,
-        description: post.data.description,
-        tags: post.data.tags,
-        pubDate: post.data.pubDate,
-        externalUrl: post.data.externalUrl,
-        coverImage: coverImage, // ¡Aquí está la imagen!
-      };
-    })
-  );
 
-  return new Response(JSON.stringify(postsWithExtraData), {
-    headers: { 'Content-Type': 'application/json' },
-  });
-};
+<!-- 3. Todos los estilos relacionados con los resultados se mudan aquí. -->
+<style lang="scss">
+  // 1. Importa el módulo de color de Sass junto a tus otras importaciones.
+  @use 'sass:color';
+  @use '../../styles//variables' as var;
+
+  .no-results {
+    color: #ccc;
+    text-align: center;
+    font-size: 1.2rem;
+    padding: 2rem;
+    background-color: #2a2a2a;
+    border-radius: 12px;
+  }
+
+  /* --- Estilos base (Móvil) --- */
+  .posts-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .post-card {
+    display: flex;
+    gap: 1rem;
+    background-color: #2a2a2a;
+    border: 1px solid #444;
+    border-radius: 12px;
+    padding: 1rem;
+    transition: border-color 0.2s ease;
+    &:hover { border-color: #555; }
+  }
+  .card-image-link { flex-shrink: 0; }
+  .card-image, .image-placeholder {
+    width: 80px; height: 80px; object-fit: cover; border-radius: 8px;
+  }
+  .card-content {
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .card-title-link {
+    text-decoration: none;
+    h2 {
+      font-size: 1.25rem; margin: 0 0 0.5rem 0; color: var.$primary-color; transition: color 0.2s ease;
+    }
+    /* --- 2. Aquí está el cambio --- */
+    &:hover h2 { 
+      color: color.adjust(var.$primary-color, $lightness: 15%);
+    }
+  }
+  .card-content p {
+    font-size: 0.9rem; color: #ccc; margin: 0; line-height: 1.5;
+  }
+  .card-content time {
+    font-size: 0.8rem; color: #aaa; margin-top: 0.5rem;
+  }
+  .external-link-wrapper { margin-top: 0.75rem; }
+  .external-button {
+    display: inline-block; background-color: #333; color: var.$primary-color; text-decoration: none;
+    padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.8rem; font-weight: bold;
+    border: 1px solid #555; transition: background-color 0.2s ease, color 0.2s ease;
+    &:hover { background-color: var.$primary-color; color: #121212; }
+  }
+  
+  /* --- Estilos para Tablet y Superior --- */
+  @media (min-width: 768px) {
+    .posts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    }
+    .post-card { flex-direction: column; padding: 0; }
+    .card-image, .image-placeholder {
+      width: 100%; height: auto; aspect-ratio: 16 / 10; border-radius: 12px 12px 0 0;
+    }
+    .card-content { padding: 1.5rem; }
+    .card-title-link h2 { font-size: 1.5rem; }
+    .card-content p { font-size: 1rem; }
+    .card-content time { font-size: 0.875rem; }
+  }
+</style>

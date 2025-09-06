@@ -1,7 +1,6 @@
 ---
 import Layout from "../layouts/main/Layout.astro";
 import NotFoundImage from "../assets/404/404.svg";
-import { Image } from "astro:assets";
 import "./_404.scss";
 ---
 
@@ -9,12 +8,11 @@ import "./_404.scss";
   title="Página no encontrada"
   description="El recurso buscado no existe o no pudo ser encontrado. HTTP 404"
 >
-  <!-- El contenedor principal ahora es más simple -->
   <div class="container-404">
-    <Image
-      src={NotFoundImage}
+    <img
+      src={NotFoundImage.src}
       alt="Nave espacial abduciendo una señal de interrogación. Imagen 404 recurso no encontrado."
-      width={250}
+      width="250"
       class="image-404"
     />
     <h1 class="title-404">¡Ups! Página no encontrada</h1>

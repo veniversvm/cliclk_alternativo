@@ -1,0 +1,382 @@
+[
+  {
+    "slug": "9GAG",
+    "title": "9GAG",
+    "description": "El local de memes.",
+    "tags": [
+      "paginas",
+      "web",
+      "Meme"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://9gag.com/",
+    "coverImage": "/images/blog/9GAG/1-9GAG.png",
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "archiveorg",
+    "title": "Archive.org",
+    "description": "La biblioteca más grande de internet.",
+    "tags": [
+      "pagína",
+      "web",
+      "indie",
+      "archivo"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "http://archive.org",
+    "coverImage": "/images/blog/archiveorg/1AO.jpg",
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "batocera",
+    "title": "Batocera",
+    "description": "El linux para el jugador retro.",
+    "tags": [
+      "Software",
+      "Gaming",
+      "Linux",
+      "Opensource"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://batocera.org/",
+    "coverImage": "/images/blog/batocera/1BAT.jpg",
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "blender",
+    "title": "Blender",
+    "description": "La estrella del Open Source",
+    "tags": [
+      "software",
+      "3D",
+      "Open source",
+      "herramienta"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://www.blender.org/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "Classcentral",
+    "title": "Classcentral",
+    "description": "El Hub central de los cursos en línea.",
+    "tags": [
+      "pagína",
+      "web",
+      "Cursos"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://www.classcentral.com/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "distrowatch",
+    "title": "Distrowatch",
+    "description": "El directorio Linux",
+    "tags": [
+      "pagína",
+      "web",
+      "Linux",
+      "Codigo abierto",
+      "Open source"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://distrowatch.com/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "instructables",
+    "title": "instructables",
+    "description": "El hogar de toda la comunidad de creadores.",
+    "tags": [
+      "pagina",
+      "web",
+      "DIY",
+      "proyectos"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://www.instructables.com/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "itchio",
+    "title": "itchio",
+    "description": "el epicentro del mundo indie.",
+    "tags": [
+      "pagína",
+      "Gaming",
+      "web",
+      "Indie"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://itch.io/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "Kiwix",
+    "title": "Kiwixt",
+    "description": "Liberando a la Wikipedia",
+    "tags": [
+      "software",
+      "Wikia",
+      "Enciclopedia",
+      "herramienta",
+      "web"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://kiwix.org/es/applications/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "Kodi",
+    "title": "Kodi",
+    "description": "El reproductor definitivo",
+    "tags": [
+      "software",
+      "Películas",
+      "software",
+      "herramienta"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://kodi.tv/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "musclewiki",
+    "title": "MuscleWiki",
+    "description": "El gimnasio hecho enciclopedia ",
+    "tags": [
+      "pagina",
+      "web",
+      "Gym",
+      "fitness",
+      "ejercicios"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://musclewiki.com/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "mynoise",
+    "title": "Mynoise",
+    "description": "Ven y relájate",
+    "tags": [
+      "pagina",
+      "web",
+      "Musica",
+      "relajación",
+      "zen"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://mynoise.net/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "NoteBookLM",
+    "title": "NotebookLM",
+    "description": "Tu ayudante de InvestigAción",
+    "tags": [
+      "software",
+      "web",
+      "software",
+      "herramienta"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://notebooklm.google/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "Passweird",
+    "title": "Passweird",
+    "description": " El generador de contraseñas tan repulsivo que hasta un hacker se pondría enfermo.",
+    "tags": [
+      "pagína",
+      "online",
+      "Herramienta",
+      "web"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://www.passweird.com/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "Photopea",
+    "title": "Photopea",
+    "description": "Photopea, la alternativa a photoshop",
+    "tags": [
+      "Software",
+      "pagína",
+      "online",
+      "Diseño",
+      "Herramienta",
+      "web"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://www.photopea.com/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "pico_8",
+    "title": "Pico-8",
+    "description": "El rey de las consolas de fantasía",
+    "tags": [
+      "software",
+      "emuladores",
+      "videojuegos",
+      "retro"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://www.lexaloffle.com/pico-8.php",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "pixelroma",
+    "title": "Pixelorama",
+    "description": "Para los amantes del Pixelart",
+    "tags": [
+      "software",
+      "pagina",
+      "videojuegos",
+      "retro"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://orama-interactive.itch.io/pixelorama",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "retroarch",
+    "title": "RetroArch",
+    "description": "Colección de emuladores retro",
+    "tags": [
+      "software",
+      "emuladores",
+      "videojuegos",
+      "retro"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://www.retroarch.com/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "spelunky",
+    "title": "Spelunky",
+    "description": "Plataformas Roguelike",
+    "tags": [
+      "gaming",
+      "web",
+      "pagina",
+      "Retro",
+      "videojuegos"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://yancharkin.github.io/SpelunkyClassicHDhtml5/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "spotify",
+    "title": "Spotify",
+    "description": "Todo sobre Spotify, el gigante del streaming musical.",
+    "tags": [
+      "musica",
+      "reproductores",
+      "online"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://open.spotify.com/intl-es/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "stremio",
+    "title": "Stremio",
+    "description": "el Netflix de código abierto",
+    "tags": [
+      "cine",
+      "peliculas",
+      "streaming",
+      "Software",
+      "Opensource"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://www.stremio.com/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "supercook",
+    "title": "Supercook",
+    "description": "Cocina con lo que tengas",
+    "tags": [
+      "paginas",
+      "herramienta",
+      "web",
+      "cocina"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": " https://www.supercook.com/#/desktop",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "tetrio",
+    "title": "Tetri.o",
+    "description": "Tetris revolucionado.",
+    "tags": [
+      "paginas",
+      "Gaming",
+      "web",
+      "Indie"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://google.com",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "the_bezier_game",
+    "title": "The Bezier Game",
+    "description": "El juego para dominar Bézier",
+    "tags": [
+      "paginas",
+      "web",
+      "diseño gráfico",
+      "herramienta"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://bezier.method.ac/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "wiggly_paint",
+    "title": "WigglyPaint",
+    "description": "Una divertida herramienta de dibujo",
+    "tags": [
+      "paginas",
+      "web",
+      "Dibujo",
+      "herramienta"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://wigglypaint.net/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  }
+]

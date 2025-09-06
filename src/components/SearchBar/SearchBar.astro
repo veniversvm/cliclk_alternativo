@@ -1,20 +1,13 @@
 ---
 // src/components/SearchBar/SearchBar.astro
-
-// 1. Definimos las props que el componente puede aceptar.
-//    'size' será opcional y podrá ser 'small' o 'large'.
 interface Props {
   size?: 'small' | 'large';
 }
-
-// 2. Si no se pasa la prop 'size', por defecto será 'large'.
 const { size = 'large' } = Astro.props;
 ---
 
-<!-- 3. Usamos la directiva class:list para añadir una clase CSS
-     dinámicamente si el tamaño es 'small'. Esto nos permitirá
-     aplicar estilos específicos. -->
 <div class:list={["search-wrapper", { "search-wrapper--small": size === 'small' }]}>
+  <!-- El action y method son un buen fallback si JS falla -->
   <form class="search-form" action="/search" method="get">
     <input
       type="search"
@@ -28,6 +21,30 @@ const { size = 'large' } = Astro.props;
     </button>
   </form>
 </div>
+
+<!-- AÑADIMOS EL SCRIPT PARA LA INTERACTIVIDAD -->
+<script>
+  // Seleccionamos todos los formularios de búsqueda en la página
+  document.querySelectorAll('.search-form').forEach(form => {
+    form.addEventListener('submit', (event) => {
+      // 1. Prevenimos el comportamiento por defecto (recargar la página)
+      event.preventDefault(); 
+      
+      // 2. Obtenemos el campo de texto dentro de este formulario específico
+      const input = form.querySelector('.search-input') as HTMLInputElement;
+      const query = input.value.trim();
+
+      // 3. Si hay algo escrito, redirigimos a la página de búsqueda
+      if (query) {
+      const newUrl = `/search?q=${encodeURIComponent(query)}`;
+      history.pushState({}, "", newUrl);
+
+      // Lanzamos evento para que search.astro vuelva a ejecutar
+      window.dispatchEvent(new Event("search:changed"));
+    }
+    });
+  });
+</script>
 
 <style lang="scss">
   @use 'sass:color';

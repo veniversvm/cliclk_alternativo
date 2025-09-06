@@ -1,22 +1,43 @@
 ---
 // src/pages/search.astro (VERSIÓN SSR)
+// src/pages/search.astro (VERSIÓN ESTÁTICA / CLIENT-SIDE)
 import Layout from "../layouts/main/Layout.astro";
-import PostCard from "../components/PostCard/PostCard.astro";
-import Fuse from "fuse.js";
 import SearchBar from "../components/SearchBar/SearchBar.astro";
+// Ya no importamos PostCard aquí porque lo generaremos con JS
+// Tampoco necesitamos Fuse en el servidor
 
-// 2. Obtenemos el término de búsqueda desde la URL en el servidor
-const searchTerm = Astro.url.searchParams.get("q")?.trim() || "";
+---
 
-let finalResults: any[] = [];
+<Layout
+  title="Resultados de Búsqueda"
+  description="Encuentra artículos en el sitio."
+>
+  <div class="search-results-container">
+    <SearchBar size="small" />
 
-// 3. Si hay un término de búsqueda, ejecutamos la lógica de Fuse.js
-if (searchTerm) {
-  // Obtenemos los datos directamente desde la API (en el servidor)
-  const response = await fetch(new URL("/api/search.json", Astro.url.origin));
-  const allPosts = await response.json();
+    <h1 id="search-title">Realiza una búsqueda</h1>
 
-  // La misma configuración de Fuse que ya tenías
+    <!-- Contenedor donde inyectaremos los resultados -->
+    <div id="results-grid" class="posts-grid"></div>
+
+    <!-- Mensaje para cuando no haya resultados -->
+    <p id="no-results-message" class="no-results" hidden>
+      No se encontraron artículos que coincidan con tu búsqueda. ¡Intenta
+      con otras palabras!
+    </p>
+  </div>
+</Layout>
+
+<script>
+  import Fuse from "fuse.js";
+
+  // --- Elementos del DOM ---
+  const searchTitle = document.getElementById('search-title');
+  const resultsGrid = document.getElementById('results-grid');
+  const noResultsMessage = document.getElementById('no-results-message');
+  const searchInput = document.querySelector('.search-wrapper--small .search-input') as HTMLInputElement;
+
+  // --- Opciones de Fuse.js (las mismas que tenías) ---
   const fuseOptions = {
     threshold: 0.4,
     minMatchCharLength: 2,
@@ -27,75 +48,102 @@ if (searchTerm) {
     ],
   };
 
-  const fuse = new Fuse(allPosts, fuseOptions);
+  /**
+   * Genera el HTML para un solo PostCard.
+   * No podemos usar el componente Astro, así que replicamos su HTML.
+   */
+  function createPostCardHTML(post) {
+    const pubDate = new Date(post.pubDate).toLocaleDateString('es-ES', {
+      year: 'numeric', month: 'long', day: 'numeric'
+    });
+    
+    // Genera los tags como spans
+    const tagsHTML = post.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
 
-  // Fuse devuelve { item: post, ... }, solo nos interesa el 'item'
-  finalResults = fuse.search(searchTerm).map((result) => result.item);
-}
----
-
-<Layout
-  title={`Resultados para: ${searchTerm}`}
-  description={`Resultados de búsqueda para ${searchTerm}`}
->
-  <div class="search-results-container">
-    <SearchBar size="small" />
-
-    <h1>
-      {searchTerm ? `Resultados para: "${searchTerm}"` : "Realiza una búsqueda"}
-    </h1>
-
-    {
-      searchTerm && finalResults.length > 0 && (
-        <div class="posts-grid">
-          {finalResults.map((post) => (
-            // CAMBIO CLAVE AQUÍ: Pasamos 'slug' y 'data' como props separadas
-            <PostCard
-              slug={post.slug}
-              data={{
-                title: post.title,
-                description: post.description,
-                pubDate: new Date(post.pubDate),
-                tags: post.tags,
-                externalUrl: post.externalUrl,
-                coverImage: post.coverImage,
-                author: post.author,
-              }}
-            />
-          ))}
+    return `
+        <a href="/blog/${post.slug}/${post.slug}" class="post-card">
+        ${post.coverImage ? `<img src="${post.coverImage}" alt="Portada de ${post.title}" class="post-card-img" loading="lazy" />` : ''}
+        <div class="post-card-content">
+          <div class="post-card-tags">${tagsHTML}</div>
+          <h3 class="post-card-title">${post.title}</h3>
+          <p class="post-card-description">${post.description}</p>
+          <div class="post-card-footer">
+            <span class="post-card-author">${post.author}</span>
+            <time datetime="${post.pubDate}">${pubDate}</time>
+          </div>
         </div>
-      )
+      </a>
+    `;
+  }
+  
+  /**
+   * Función principal que se ejecuta al cargar la página
+   */
+  async function runSearch() {
+    // 1. Obtenemos el término de búsqueda de la URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchTerm = urlParams.get("q")?.trim() || "";
+
+    if (searchInput) {
+      searchInput.value = searchTerm; // Mostramos el término en la barra
     }
 
-    {/* Lógica de mensajes de 'no resultados' simplificada */}
-    {
-      searchTerm && finalResults.length === 0 && (
-        <p class="no-results">
-          No se encontraron artículos que coincidan con tu búsqueda. ¡Intenta
-          con otras palabras!
-        </p>
-      )
+    if (!searchTerm) {
+      searchTitle.textContent = "Realiza una búsqueda";
+      return; // No hay nada que buscar
     }
-    {
-      !searchTerm && (
-        <p class="no-results">
-          Escribe algo en la barra de búsqueda para encontrar artículos.
-        </p>
-      )
-    }
-  </div>
-</Layout>
+    
+    searchTitle.textContent = `Resultados para: "${searchTerm}"`;
 
-<!-- 5. Añadimos los estilos para el layout de esta página -->
+    // 2. Obtenemos el JSON estático
+    const response = await fetch('/search.json');
+    const allPosts = await response.json();
+
+    // 3. Inicializamos Fuse y buscamos
+    const fuse = new Fuse(allPosts, fuseOptions);
+    const results = fuse.search(searchTerm);
+
+    // 4. Mostramos los resultados
+    resultsGrid.innerHTML = ''; // Limpiamos resultados anteriores
+    noResultsMessage.hidden = true; // Ocultamos el mensaje por defecto
+
+    if (results.length > 0) {
+      const resultsHTML = results
+        .map(result => createPostCardHTML(result.item))
+        .join('');
+      resultsGrid.innerHTML = resultsHTML;
+    } else {
+      noResultsMessage.hidden = false; // Mostramos el mensaje de "no hay resultados"
+    }
+  }
+
+  // Ejecutamos la búsqueda cuando la página cargue
+ function handleSearch() {
+  runSearch();
+}
+
+// Ejecutar al cargar
+handleSearch();
+
+// Re-ejecutar si cambia la URL (cuando usas el buscador varias veces)
+window.addEventListener("popstate", handleSearch);
+
+// También escucha clicks internos que cambian la URL con pushState
+window.addEventListener("search:changed", handleSearch);
+</script>
+
+
 <style lang="scss">
+  // Tus estilos de .search-results-container, h1, .no-results, y .posts-grid se mantienen
   @use "../styles/variables" as var;
+  @use "../styles/postcard";
 
   .search-results-container {
     width: 100%;
     max-width: 1200px;
     margin: 2rem auto;
     padding: 0 1rem;
-    min-height: 50vh; // Para que el mensaje de "no hay resultados" no quede pegado arriba
+    min-height: 50vh;
   }
 
   h1 {
@@ -104,7 +152,7 @@ if (searchTerm) {
     text-align: center;
     text-transform: uppercase;
     color: #fff;
-    word-break: break-all; // Para términos de búsqueda largos
+    word-break: break-all;
   }
 
   .no-results {
@@ -116,13 +164,66 @@ if (searchTerm) {
     border-radius: 12px;
   }
 
-  /* Los estilos de .posts-grid y .post-card ya no son necesarios aquí,
-     porque están encapsulados dentro de PostCard.astro.
-     Solo necesitamos la cuadrícula principal. */
   .posts-grid {
     display: grid;
     gap: 1.5rem;
-    /* La magia del grid responsivo */
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   }
+
+  /* Añade aquí los estilos básicos de PostCard para que se apliquen al HTML generado */
+  /* Esto es una simplificación, ajústalo a los estilos de tu PostCard.astro real */
+  .post-card {
+    display: block;
+    background-color: #2a2a2a;
+    border-radius: 12px;
+    overflow: hidden;
+    text-decoration: none;
+    color: #fff;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .post-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  }
+  .post-card-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+  }
+  .post-card-content {
+    padding: 1rem;
+  }
+  .post-card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+  .tag {
+    background-color: var.$primary-color;
+    color: #1e1e1e;
+    padding: 0.25rem 0.6rem;
+    border-radius: 99px;
+    font-size: 0.8rem;
+    font-weight: bold;
+  }
+  .post-card-title {
+    font-size: 1.4rem;
+    margin: 0 0 0.5rem 0;
+  }
+  .post-card-description {
+    font-size: 1rem;
+    color: #ccc;
+    line-height: 1.5;
+  }
+  .post-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #aaa;
+  }
+
+  
 </style>

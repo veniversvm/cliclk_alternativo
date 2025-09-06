@@ -7,7 +7,7 @@ import { navLinks } from "../../data/navigation.js";
 // import { logo } from '../../assets/astro.svg'
 import { ClientRouter } from "astro:transitions";
 import Footer from "../../components/footer/Footer.astro";
-import Image from "astro/components/Image.astro";
+// import Image from "astro/components/Image.astro";
 import MiniLogo from "../../assets/Logo/MiniLogo.svg";
 import type { record } from "astro:schema";
 // LÍNEA CORRECTA
@@ -50,11 +50,14 @@ const { title, description } = Astro.props;
       <!-- Menú de escritorio (solo visible en desktop) -->
       <nav class="desktop-nav">
         <a href="/" >
-          <Image 
-          class="desktop-nav-image"
-          src={MiniLogo}
-          alt="Mini Logo de Click Alternativo para la barra de navegación. Al hacer clic irás a la página de inicio."
+          <a href="/" >
+          <img 
+            class="desktop-nav-image"
+            src={MiniLogo.src}
+            alt="Mini Logo de Click Alternativo para la barra de navegación. Al hacer clic irás a la página de inicio."
           />
+        </a>
+
         </a>
         {navLinks?.map((link) => <a href={link.href}>{link.text}</a>)}
       </nav>
