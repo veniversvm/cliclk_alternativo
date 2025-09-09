@@ -1,11 +1,7 @@
 ---
-// src/pages/search.astro (VERSIÓN SSR)
-// src/pages/search.astro (VERSIÓN ESTÁTICA / CLIENT-SIDE)
+// src/pages/search.astro
 import Layout from "../layouts/main/Layout.astro";
 import SearchBar from "../components/SearchBar/SearchBar.astro";
-// Ya no importamos PostCard aquí porque lo generaremos con JS
-// Tampoco necesitamos Fuse en el servidor
-
 ---
 
 <Layout
@@ -16,28 +12,16 @@ import SearchBar from "../components/SearchBar/SearchBar.astro";
     <SearchBar size="small" />
 
     <h1 id="search-title">Realiza una búsqueda</h1>
-
-    <!-- Contenedor donde inyectaremos los resultados -->
     <div id="results-grid" class="posts-grid"></div>
-
-    <!-- Mensaje para cuando no haya resultados -->
     <p id="no-results-message" class="no-results" hidden>
-      No se encontraron artículos que coincidan con tu búsqueda. ¡Intenta
-      con otras palabras!
+      No se encontraron artículos que coincidan con tu búsqueda. ¡Intenta con
+      otras palabras!
     </p>
   </div>
 </Layout>
 
+<!-- Cambiamos a JavaScript simple, quitando lang="ts" -->
 <script>
-  import Fuse from "fuse.js";
-
-  // --- Elementos del DOM ---
-  const searchTitle = document.getElementById('search-title');
-  const resultsGrid = document.getElementById('results-grid');
-  const noResultsMessage = document.getElementById('no-results-message');
-  const searchInput = document.querySelector('.search-wrapper--small .search-input') as HTMLInputElement;
-
-  // --- Opciones de Fuse.js (las mismas que tenías) ---
   const fuseOptions = {
     threshold: 0.4,
     minMatchCharLength: 2,
@@ -50,180 +34,93 @@ import SearchBar from "../components/SearchBar/SearchBar.astro";
 
   /**
    * Genera el HTML para un solo PostCard.
-   * No podemos usar el componente Astro, así que replicamos su HTML.
+   * @param {object} post El objeto del post a renderizar.
+   * @returns {string} El string HTML de la tarjeta.
    */
   function createPostCardHTML(post) {
-    const pubDate = new Date(post.pubDate).toLocaleDateString('es-ES', {
-      year: 'numeric', month: 'long', day: 'numeric'
+    const pubDate = new Date(post.pubDate).toLocaleDateString("es-ES", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     });
-    
-    // Genera los tags como spans
-    const tagsHTML = post.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
+    const isoDate = new Date(post.pubDate).toISOString();
+    const { coverImage, externalUrl, slug, title, description } = post;
+
+    const imageHTML = coverImage
+      ? `<img src="${coverImage}" alt="Portada de ${title}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px; background-color: #333;" loading="lazy" decoding="async"/>`
+      : `<div style="width: 80px; height: 80px; border-radius: 8px; background-color: #333;"></div>`;
+
+    const externalLinkHTML = externalUrl
+      ? `<div style="margin-top: 0.75rem;"><a href="${externalUrl}" target="_blank" rel="noopener noreferrer" style="display: inline-block; background-color: #333; color: #ffc107; text-decoration: none; padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.8rem; font-weight: bold; border: 1px solid #555;">Visitar Página →</a></div>`
+      : "";
 
     return `
-        <a href="/blog/${post.slug}/${post.slug}" class="post-card">
-        ${post.coverImage ? `<img src="${post.coverImage}" alt="Portada de ${post.title}" class="post-card-img" loading="lazy" />` : ''}
-        <div class="post-card-content">
-          <div class="post-card-tags">${tagsHTML}</div>
-          <h3 class="post-card-title">${post.title}</h3>
-          <p class="post-card-description">${post.description}</p>
-          <div class="post-card-footer">
-            <span class="post-card-author">${post.author}</span>
-            <time datetime="${post.pubDate}">${pubDate}</time>
-          </div>
+      <div style="display: flex; gap: 1rem; background-color: #2a2a2a; border: 1px solid #444; border-radius: 12px; padding: 1rem;">
+        <a href="/blog/${slug}" style="flex-shrink: 0;" aria-label="Leer más sobre ${title}">${imageHTML}</a>
+        <div style="display: flex; flex-direction: column; justify-content: center;">
+          <a href="/blog/${slug}" style="text-decoration: none;"><h2 style="font-size: 1.25rem; margin: 0 0 0.5rem 0; color: #ffc107;">${title}</h2></a>
+          <p style="font-size: 0.9rem; color: #ccc; margin: 0; line-height: 1.5;">${description}</p>
+          <time datetime="${isoDate}" style="font-size: 0.8rem; color: #aaa; margin-top: 0.5rem;">${pubDate}</time>
+          ${externalLinkHTML}
         </div>
-      </a>
-    `;
+      </div>`;
   }
-  
+
   /**
-   * Función principal que se ejecuta al cargar la página
+   * Función principal que se ejecuta para realizar la búsqueda.
    */
   async function runSearch() {
-    // 1. Obtenemos el término de búsqueda de la URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const searchTerm = urlParams.get("q")?.trim() || "";
+    const searchTitle = document.getElementById("search-title");
+    const resultsGrid = document.getElementById("results-grid");
+    const noResultsMessage = document.getElementById("no-results-message");
+    const searchInput = document.querySelector('.search-wrapper--small .search-input');
+
+    if (!searchTitle || !resultsGrid || !noResultsMessage) {
+      return;
+    }
+
+    const searchTerm = new URLSearchParams(window.location.search).get("q")?.trim() || "";
 
     if (searchInput) {
-      searchInput.value = searchTerm; // Mostramos el término en la barra
+      searchInput.value = searchTerm;
     }
 
     if (!searchTerm) {
       searchTitle.textContent = "Realiza una búsqueda";
-      return; // No hay nada que buscar
+      resultsGrid.innerHTML = "";
+      noResultsMessage.hidden = true;
+      return;
     }
-    
+
     searchTitle.textContent = `Resultados para: "${searchTerm}"`;
 
-    // 2. Obtenemos el JSON estático
-    const response = await fetch('/search.json');
+    const Fuse = (await import("fuse.js")).default;
+    const response = await fetch("/search.json");
     const allPosts = await response.json();
-
-    // 3. Inicializamos Fuse y buscamos
     const fuse = new Fuse(allPosts, fuseOptions);
     const results = fuse.search(searchTerm);
 
-    // 4. Mostramos los resultados
-    resultsGrid.innerHTML = ''; // Limpiamos resultados anteriores
-    noResultsMessage.hidden = true; // Ocultamos el mensaje por defecto
+    resultsGrid.innerHTML = "";
+    noResultsMessage.hidden = true;
 
     if (results.length > 0) {
-      const resultsHTML = results
-        .map(result => createPostCardHTML(result.item))
-        .join('');
-      resultsGrid.innerHTML = resultsHTML;
+      resultsGrid.innerHTML = results.map((result) => createPostCardHTML(result.item)).join("");
     } else {
-      noResultsMessage.hidden = false; // Mostramos el mensaje de "no hay resultados"
+      noResultsMessage.hidden = false;
     }
   }
 
-  // Ejecutamos la búsqueda cuando la página cargue
- function handleSearch() {
+  // Ejecutamos en la carga inicial
   runSearch();
-}
 
-// Ejecutar al cargar
-handleSearch();
-
-// Re-ejecutar si cambia la URL (cuando usas el buscador varias veces)
-window.addEventListener("popstate", handleSearch);
-
-// También escucha clicks internos que cambian la URL con pushState
-window.addEventListener("search:changed", handleSearch);
+  // Y volvemos a ejecutar después de CADA transición de página de Astro
+  document.addEventListener("astro:after-swap", runSearch);
 </script>
 
-
 <style lang="scss">
-  // Tus estilos de .search-results-container, h1, .no-results, y .posts-grid se mantienen
-  @use "../styles/variables" as var;
-  @use "../styles/postcard";
-
-  .search-results-container {
-    width: 100%;
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 0 1rem;
-    min-height: 50vh;
-  }
-
-  h1 {
-    font-size: 2.5rem;
-    margin-bottom: 2rem;
-    text-align: center;
-    text-transform: uppercase;
-    color: #fff;
-    word-break: break-all;
-  }
-
-  .no-results {
-    color: #ccc;
-    text-align: center;
-    font-size: 1.2rem;
-    padding: 2rem;
-    background-color: #2a2a2a;
-    border-radius: 12px;
-  }
-
-  .posts-grid {
-    display: grid;
-    gap: 1.5rem;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  }
-
-  /* Añade aquí los estilos básicos de PostCard para que se apliquen al HTML generado */
-  /* Esto es una simplificación, ajústalo a los estilos de tu PostCard.astro real */
-  .post-card {
-    display: block;
-    background-color: #2a2a2a;
-    border-radius: 12px;
-    overflow: hidden;
-    text-decoration: none;
-    color: #fff;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-  .post-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-  }
-  .post-card-img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-  }
-  .post-card-content {
-    padding: 1rem;
-  }
-  .post-card-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 0.75rem;
-  }
-  .tag {
-    background-color: var.$primary-color;
-    color: #1e1e1e;
-    padding: 0.25rem 0.6rem;
-    border-radius: 99px;
-    font-size: 0.8rem;
-    font-weight: bold;
-  }
-  .post-card-title {
-    font-size: 1.4rem;
-    margin: 0 0 0.5rem 0;
-  }
-  .post-card-description {
-    font-size: 1rem;
-    color: #ccc;
-    line-height: 1.5;
-  }
-  .post-card-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 1rem;
-    font-size: 0.9rem;
-    color: #aaa;
-  }
-
-  
+  /* Tus estilos no necesitan cambios */
+  .search-results-container { width: 100%; max-width: 1200px; margin: 2rem auto; padding: 0 1rem; min-height: 50vh; }
+  h1 { font-size: 2.5rem; margin-bottom: 2rem; text-align: center; text-transform: uppercase; color: #fff; word-break: break-all; }
+  .no-results { color: #ccc; text-align: center; font-size: 1.2rem; padding: 2rem; background-color: #2a2a2a; border-radius: 12px; }
+  .posts-grid { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
 </style>
