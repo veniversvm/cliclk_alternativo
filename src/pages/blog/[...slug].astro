@@ -1,6 +1,5 @@
 ---
-// src/pages/blog/[slug].astro
-// Versión restaurada, simple y sin el componente PostNavigation.
+// src/pages/blog/[...slug].astro
 
 import type { GetStaticPaths } from 'astro';
 import type { CollectionEntry } from 'astro:content';
@@ -14,25 +13,31 @@ export const prerender = true;
 
 const allImages = import.meta.glob<{ default: ImageMetadata }>('/src/content/blog/**/*.{jpeg,jpg,png,webp,svg}');
 
-// 1. Volvemos al getStaticPaths original y simple.
-//    Solo crea una página por cada post, sin lógica de navegación.
+// 🚀 Ahora usamos folder/archivo en el slug
+// src/pages/blog/[...slug].astro
+
 export const getStaticPaths: GetStaticPaths = async () => {
-  const entries = await getCollection('blog');
-  return entries.map((entry) => ({
-    params: { slug: entry.slug },
-    props: { entry },
-  }));
+  const entries = await getCollection("blog");
+
+  return entries.map((entry) => {
+    const [folder, fileWithExt] = entry.id.split("/");
+    const file = fileWithExt.replace(/\.(md|mdx)$/, "");
+
+    return {
+      params: { slug: `${folder}/${file}` }, // 👈 string, no array
+      props: { entry },
+    };
+  });
 };
 
-// 2. La interface Props solo necesita 'entry'.
+
 interface Props {
   entry: CollectionEntry<'blog'>;
 }
-// Solo recogemos 'entry' de los props.
+
 const { entry } = Astro.props;
 const { Content } = await entry.render();
 
-// La lógica para las imágenes y el displayUrl se mantiene.
 const postDir = dirname(entry.id);
 const filterPath = `/src/content/blog/${postDir}/`;
 const imagePromises = Object.entries(allImages)
@@ -47,10 +52,7 @@ const displayUrl = entry.data.externalUrl
 
 <Layout title={entry.data.title} description={entry.data.description}>
   <article class="blog-post">
-
-    <!-- ===== COLUMNA IZQUIDA (VISUAL) ===== -->
     <div class="post-column-visual">
-      
       {currentPostImages.length > 0 ? (
         <Carousel images={currentPostImages} />
       ) : (
@@ -64,11 +66,8 @@ const displayUrl = entry.data.externalUrl
             <li><a href={`/${tag.toLowerCase()}`}>{tag.toUpperCase()}</a></li>
           ))}
         </ul>
-        
       </div>
 
-      <!-- 3. Aquí reintroducimos el botón original "Visitar {sitio}" -->
-            <!-- 3. Aquí reintroducimos el botón original "Visitar {sitio}" -->
       {entry.data.externalUrl && (
         <div class="visit-link-container">
           <a href={entry.data.externalUrl} class="visit-button" target="_blank" rel="noopener noreferrer">
@@ -77,16 +76,11 @@ const displayUrl = entry.data.externalUrl
         </div>
       )}
 
-      <!-- ===== NUEVO BOTÓN PARA REGRESAR ===== -->
       <div class="back-button-container">
-        <button class="back-button" onclick="history.back()">
-          Regresar
-        </button>
+        <button class="back-button" onclick="history.back()">Regresar</button>
       </div>
-
     </div>
 
-    <!-- ===== COLUMNA DERECHA (TEXTO) ===== -->
     <div class="post-column-text">
       <header class="post-header">
         <h1 class="post-title">{entry.data.title}</h1>
@@ -105,6 +99,5 @@ const displayUrl = entry.data.externalUrl
         <Content />
       </div>
     </div>
-    
   </article>
 </Layout>

@@ -10,7 +10,7 @@ const PROJECT_ROOT = path.join(__dirname, '..');
 
 const CONTENT_DIR = path.join(PROJECT_ROOT, "src/content/blog");
 const OUTPUT_PATH = path.join(PROJECT_ROOT, "public/search.json");
-const PUBLIC_IMAGES_DIR = path.join(PROJECT_ROOT, "public/images/blog"); 
+const PUBLIC_IMAGES_DIR = path.join(PROJECT_ROOT, "public/images/blog");
 const IMAGE_EXTENSIONS = [".jpeg", ".jpg", ".png", ".gif", ".webp", ".svg"];
 
 console.log("🚀 Generando índice de búsqueda...");
@@ -22,7 +22,7 @@ console.log("🚀 Generando índice de búsqueda...");
  */
 function findFirstImage(postSlug) {
   const imageDirPath = path.join(PUBLIC_IMAGES_DIR, postSlug);
-  
+
   // --- PASO DE DEPURACIÓN: Comprueba qué ruta se está buscando ---
   // console.log(`[findFirstImage] Buscando imágenes para el slug '${postSlug}' en: ${imageDirPath}`);
 
@@ -60,7 +60,7 @@ function getAllPostsData() {
   const allPosts = postDirs.map((postDir) => {
     const postDirPath = path.join(CONTENT_DIR, postDir);
     const contentFile = fs.readdirSync(postDirPath).find(file => file.endsWith('.mdx') || file.endsWith('.md'));
-    
+
     if (!contentFile) return null;
 
     const filePath = path.join(postDirPath, contentFile);
@@ -68,23 +68,23 @@ function getAllPostsData() {
     const { data } = matter(fileContent);
 
     // Lógica para encontrar la imagen de portada
-    const coverImageFile = findFirstImage(postDir); 
-    
+    const coverImageFile = findFirstImage(postDir);
+
     // --- ¡¡LÍNEA CLAVE CORREGIDA!! ---
     // La URL pública no debe tener el slug duplicado.
-    const coverImage = coverImageFile 
-      ? `/images/blog/${postDir}/${coverImageFile}` 
+    const coverImage = coverImageFile
+      ? `/images/blog/${postDir}/${coverImageFile}`
       : null;
     // Esto generará: "/images/blog/9GAG/mi-imagen.jpg"
 
     return {
-      slug: postDir,
+      slug: `${postDir}/${path.basename(contentFile, path.extname(contentFile))}`, // 👈 slug folder/archivo
       title: data.title,
       description: data.description,
       tags: data.tags || [],
       pubDate: data.pubDate,
       externalUrl: data.externalUrl,
-      coverImage: coverImage, 
+      coverImage: coverImage,
       author: data.author,
     };
   }).filter(Boolean);

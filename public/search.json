@@ -1,6 +1,21 @@
 [
   {
-    "slug": "9GAG",
+    "slug": "10minute_mail/10minute_mail",
+    "title": "10MinuteMail",
+    "description": "Correo Temporal Gratuito y Desechable para Evitar Spam",
+    "tags": [
+      "paginas",
+      "web",
+      "herramienta",
+      "Correo"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://10minutemail.com/?lang=es/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "9GAG/9GAG",
     "title": "9GAG",
     "description": "El local de memes.",
     "tags": [
@@ -10,11 +25,11 @@
     ],
     "pubDate": "2022-07-01",
     "externalUrl": "https://9gag.com/",
-    "coverImage": "/images/blog/9GAG/1-9GAG.png",
+    "coverImage": null,
     "author": "Luigi Skull"
   },
   {
-    "slug": "archiveorg",
+    "slug": "archiveorg/archiveorg",
     "title": "Archive.org",
     "description": "La biblioteca más grande de internet.",
     "tags": [
@@ -25,11 +40,11 @@
     ],
     "pubDate": "2022-07-01",
     "externalUrl": "http://archive.org",
-    "coverImage": "/images/blog/archiveorg/1AO.jpg",
+    "coverImage": null,
     "author": "Luigi Skull"
   },
   {
-    "slug": "batocera",
+    "slug": "batocera/batocera",
     "title": "Batocera",
     "description": "El linux para el jugador retro.",
     "tags": [
@@ -40,11 +55,11 @@
     ],
     "pubDate": "2022-07-01",
     "externalUrl": "https://batocera.org/",
-    "coverImage": "/images/blog/batocera/1BAT.jpg",
+    "coverImage": null,
     "author": "Luigi Skull"
   },
   {
-    "slug": "blender",
+    "slug": "blender/Blender",
     "title": "Blender",
     "description": "La estrella del Open Source",
     "tags": [
@@ -59,7 +74,37 @@
     "author": "Luigi Skull"
   },
   {
-    "slug": "Classcentral",
+    "slug": "Blockbench/Blockbench",
+    "title": "Blockbench",
+    "description": "Editor 3D en el navegador",
+    "tags": [
+      "software",
+      "3D",
+      "Pagina",
+      "herramienta"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://web.blockbench.net/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "catbounce/catbounce",
+    "title": "Cat bounce",
+    "description": "Gatitos que rebotan",
+    "tags": [
+      "Pagina",
+      "Meme",
+      "Gatos",
+      "Divertido"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://cat-bounce.com/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "Classcentral/Classcentral",
     "title": "Classcentral",
     "description": "El Hub central de los cursos en línea.",
     "tags": [
@@ -73,7 +118,37 @@
     "author": "Luigi Skull"
   },
   {
-    "slug": "distrowatch",
+    "slug": "Cookie_Clicker/Cookie_Clicker",
+    "title": "Cookie Clicker",
+    "description": "Galletas por click",
+    "tags": [
+      "Gaming",
+      "pagina",
+      "juego",
+      "galleta"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://orteil.dashnet.org/cookieclicker/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "desktop_goose/desktop_goose",
+    "title": "Desktop Goose",
+    "description": "HONK HONK!",
+    "tags": [
+      "softwareg",
+      "herramienta",
+      "juego",
+      "ganso"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://samperson.itch.io/desktop-goose",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "distrowatch/distrowatch",
     "title": "Distrowatch",
     "description": "El directorio Linux",
     "tags": [
@@ -89,7 +164,53 @@
     "author": "Luigi Skull"
   },
   {
-    "slug": "instructables",
+    "slug": "ducklings/ducklings",
+    "title": "Ducklings",
+    "description": "Familia de patos",
+    "tags": [
+      "gaming",
+      "pagina",
+      "divertido",
+      "zen",
+      "pato"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://ducklings.io/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "floor796/floor796",
+    "title": "Floor796",
+    "description": "Animación Única en Expansión",
+    "tags": [
+      "pagina",
+      "web",
+      "Meme",
+      "pop"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://floor796.com/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "godot/godot",
+    "title": "Godot",
+    "description": "Motor gratuito y Open source",
+    "tags": [
+      "software",
+      "3D",
+      "Open source",
+      "herramienta"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://godotengine.org/download/windows/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "instructables/instructables",
     "title": "instructables",
     "description": "El hogar de toda la comunidad de creadores.",
     "tags": [
@@ -104,7 +225,7 @@
     "author": "Luigi Skull"
   },
   {
-    "slug": "itchio",
+    "slug": "itchio/itchio",
     "title": "itchio",
     "description": "el epicentro del mundo indie.",
     "tags": [
@@ -119,7 +240,7 @@
     "author": "Luigi Skull"
   },
   {
-    "slug": "Kiwix",
+    "slug": "Kiwix/Kiwix",
     "title": "Kiwixt",
     "description": "Liberando a la Wikipedia",
     "tags": [
@@ -135,7 +256,7 @@
     "author": "Luigi Skull"
   },
   {
-    "slug": "Kodi",
+    "slug": "Kodi/kodi",
     "title": "Kodi",
     "description": "El reproductor definitivo",
     "tags": [
@@ -150,7 +271,7 @@
     "author": "Luigi Skull"
   },
   {
-    "slug": "musclewiki",
+    "slug": "musclewiki/musclewiki",
     "title": "MuscleWiki",
     "description": "El gimnasio hecho enciclopedia ",
     "tags": [
@@ -166,7 +287,7 @@
     "author": "Luigi Skull"
   },
   {
-    "slug": "mynoise",
+    "slug": "mynoise/musclewiki",
     "title": "Mynoise",
     "description": "Ven y relájate",
     "tags": [
@@ -182,7 +303,7 @@
     "author": "Luigi Skull"
   },
   {
-    "slug": "NoteBookLM",
+    "slug": "NoteBookLM/NoteBookLM",
     "title": "NotebookLM",
     "description": "Tu ayudante de InvestigAción",
     "tags": [
@@ -197,7 +318,7 @@
     "author": "Luigi Skull"
   },
   {
-    "slug": "Passweird",
+    "slug": "Passweird/Passweird",
     "title": "Passweird",
     "description": " El generador de contraseñas tan repulsivo que hasta un hacker se pondría enfermo.",
     "tags": [
@@ -212,7 +333,7 @@
     "author": "Luigi Skull"
   },
   {
-    "slug": "Photopea",
+    "slug": "Photopea/Photopea",
     "title": "Photopea",
     "description": "Photopea, la alternativa a photoshop",
     "tags": [
@@ -229,7 +350,7 @@
     "author": "Luigi Skull"
   },
   {
-    "slug": "pico_8",
+    "slug": "pico_8/pico_8",
     "title": "Pico-8",
     "description": "El rey de las consolas de fantasía",
     "tags": [
@@ -244,7 +365,7 @@
     "author": "Luigi Skull"
   },
   {
-    "slug": "pixelroma",
+    "slug": "pixelroma/pixelroma",
     "title": "Pixelorama",
     "description": "Para los amantes del Pixelart",
     "tags": [
@@ -259,7 +380,52 @@
     "author": "Luigi Skull"
   },
   {
-    "slug": "retroarch",
+    "slug": "pointerpointer/pointerpointer",
+    "title": "Pointerpointer",
+    "description": "¡Hey! ¿Dónde esta mi cusor?  ",
+    "tags": [
+      "pagina",
+      "meme",
+      "curioso",
+      "Divertido"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://pointerpointer.com/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "qr_grid/qr_grid",
+    "title": "QR GRID",
+    "description": "Generador de QR simple",
+    "tags": [
+      "pagina",
+      "herramienta",
+      "software",
+      "QR"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://qr.grid.ws/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "radio_garden/radio_garden",
+    "title": "Radio Garden",
+    "description": "Escucha Radios de Todo el Mundo en Vivo",
+    "tags": [
+      "musica",
+      "pagina",
+      "herramienta",
+      "Divertido"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://radio.garden/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "retroarch/retroarch",
     "title": "RetroArch",
     "description": "Colección de emuladores retro",
     "tags": [
@@ -274,7 +440,7 @@
     "author": "Luigi Skull"
   },
   {
-    "slug": "spelunky",
+    "slug": "spelunky/spelunky",
     "title": "Spelunky",
     "description": "Plataformas Roguelike",
     "tags": [
@@ -290,7 +456,7 @@
     "author": "Luigi Skull"
   },
   {
-    "slug": "spotify",
+    "slug": "spotify/spotify",
     "title": "Spotify",
     "description": "Todo sobre Spotify, el gigante del streaming musical.",
     "tags": [
@@ -304,7 +470,7 @@
     "author": "Luigi Skull"
   },
   {
-    "slug": "stremio",
+    "slug": "stremio/stremi.o",
     "title": "Stremio",
     "description": "el Netflix de código abierto",
     "tags": [
@@ -320,7 +486,7 @@
     "author": "Luigi Skull"
   },
   {
-    "slug": "supercook",
+    "slug": "supercook/supercook",
     "title": "Supercook",
     "description": "Cocina con lo que tengas",
     "tags": [
@@ -335,7 +501,22 @@
     "author": "Luigi Skull"
   },
   {
-    "slug": "tetrio",
+    "slug": "tarotoo/tarotoo",
+    "title": "taotoo",
+    "description": "Lecturas de cartas online",
+    "tags": [
+      "paginas",
+      "herramienta",
+      "web",
+      "tarot"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://tarotoo.com/es",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "tetrio/tetrio",
     "title": "Tetri.o",
     "description": "Tetris revolucionado.",
     "tags": [
@@ -350,7 +531,7 @@
     "author": "Luigi Skull"
   },
   {
-    "slug": "the_bezier_game",
+    "slug": "the_bezier_game/the_bezier_game",
     "title": "The Bezier Game",
     "description": "El juego para dominar Bézier",
     "tags": [
@@ -365,7 +546,22 @@
     "author": "Luigi Skull"
   },
   {
-    "slug": "wiggly_paint",
+    "slug": "websudoku/websudoku",
+    "title": "Websudoku",
+    "description": "Tu sudoku diario",
+    "tags": [
+      "paginas",
+      "web",
+      "gaming",
+      "Puzzle"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://es.websudoku.com/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "wiggly_paint/wiggly_paint",
     "title": "WigglyPaint",
     "description": "Una divertida herramienta de dibujo",
     "tags": [
