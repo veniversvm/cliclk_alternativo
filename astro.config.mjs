@@ -10,8 +10,8 @@ export default defineConfig({
   //  adapter: node({
   //   mode: 'standalone',
   // }),
-  site: 'https://clickalternativo.com',
-  // https:  'https://veniversvm.github.io',
-  // base: '/cliclk_alternativo',
+  //site: 'https://clickalternativo.com',
+  site: 'https://veniversvm.github.io', // Tu URL de usuario de GitHub
+  base: '/cliclk_alternativo',
   output: 'static',
 });

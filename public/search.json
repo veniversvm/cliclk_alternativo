@@ -2,12 +2,13 @@
   {
     "slug": "10minute_mail/10minute_mail",
     "title": "10MinuteMail",
-    "description": "Correo Temporal Gratuito y Desechable para Evitar Spam",
+    "description": "Correo temporal gratuito y desechable para proteger tu bandeja de entrada del spam y registros no deseados.",
     "tags": [
       "paginas",
       "web",
       "herramienta",
-      "Correo"
+      "Correo",
+      "Temporal"
     ],
     "pubDate": "2022-07-01",
     "externalUrl": "https://10minutemail.com/?lang=es/",
@@ -15,13 +16,31 @@
     "author": "Luigi Skull"
   },
   {
+    "slug": "2048/2048",
+    "title": "2048",
+    "description": "Juega al 2048 original, creado por su desarrollador auténtico. ¡El clásico que inició todo!",
+    "tags": [
+      "gaming",
+      "pagina",
+      "puzzle",
+      "classic",
+      "2048"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://play2048.co/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
     "slug": "9GAG/9GAG",
     "title": "9GAG",
-    "description": "El local de memes.",
+    "description": "Memes virales todos los días, creados y compartidos por una comunidad activa de amantes del humor en internet",
     "tags": [
       "paginas",
       "web",
-      "Meme"
+      "meme",
+      "trends",
+      "chistes"
     ],
     "pubDate": "2022-07-01",
     "externalUrl": "https://9gag.com/",
@@ -29,14 +48,30 @@
     "author": "Luigi Skull"
   },
   {
+    "slug": "adblock_tester/adblock_tester",
+    "title": "AdBlock-Tester",
+    "description": "Testea gratis tu bloqueador de anuncios al instante.",
+    "tags": [
+      "paginas",
+      "adblocker",
+      "bloqueador",
+      "anuncios"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://adblock-tester.com/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
     "slug": "archiveorg/archiveorg",
     "title": "Archive.org",
-    "description": "La biblioteca más grande de internet.",
+    "description": "la biblioteca digital más grande de internet con millones de libros, artículos y recursos gratuitos.",
     "tags": [
-      "pagína",
+      "paginas",
       "web",
-      "indie",
-      "archivo"
+      "streaming",
+      "archivo",
+      "biblioteca"
     ],
     "pubDate": "2022-07-01",
     "externalUrl": "http://archive.org",
@@ -44,14 +79,33 @@
     "author": "Luigi Skull"
   },
   {
+    "slug": "audionautix/audionautx",
+    "title": "audionautix",
+    "description": "Descarga música libre de derechos de autor para tus videos, podcasts y proyectos comerciales.",
+    "tags": [
+      "musica",
+      "copyright",
+      "contenido",
+      "libre"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://audionautix.com/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
     "slug": "batocera/batocera",
     "title": "Batocera",
-    "description": "El linux para el jugador retro.",
+    "description": "La mejor distro Linux optimizada para juegos retro e indies, rápida y ligera.",
     "tags": [
-      "Software",
-      "Gaming",
-      "Linux",
-      "Opensource"
+      "software",
+      "gaming",
+      "linux",
+      "open",
+      "source",
+      "sistema",
+      "operativo",
+      "os"
     ],
     "pubDate": "2022-07-01",
     "externalUrl": "https://batocera.org/",
@@ -59,13 +113,31 @@
     "author": "Luigi Skull"
   },
   {
+    "slug": "Blank_page/Blank_page",
+    "title": "blank.page",
+    "description": "Página en blanco online para escribir sin distracciones, gratis y al instante.",
+    "tags": [
+      "paginas",
+      "software",
+      "herramienta",
+      "escribir",
+      "office",
+      "ofimatica"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://blank.page/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
     "slug": "blender/Blender",
     "title": "Blender",
-    "description": "La estrella del Open Source",
+    "description": "Suite 3D gratuita y de código abierto para modelado, animación y renderizado profesional.",
     "tags": [
       "software",
-      "3D",
-      "Open source",
+      "3d",
+      "open",
+      "source",
       "herramienta"
     ],
     "pubDate": "2022-07-01",
@@ -76,11 +148,12 @@
   {
     "slug": "Blockbench/Blockbench",
     "title": "Blockbench",
-    "description": "Editor 3D en el navegador",
+    "description": "Editor 3D online en el navegador, sin descargas y listo para modelar al instante.",
     "tags": [
       "software",
-      "3D",
-      "Pagina",
+      "paginas",
+      "3d",
+      "pagina",
       "herramienta"
     ],
     "pubDate": "2022-07-01",
@@ -91,12 +164,12 @@
   {
     "slug": "catbounce/catbounce",
     "title": "Cat bounce",
-    "description": "Gatitos que rebotan",
+    "description": "Gatitos PNG animados que rebotan",
     "tags": [
-      "Pagina",
-      "Meme",
-      "Gatos",
-      "Divertido"
+      "paginas",
+      "meme",
+      "gatos",
+      "divertido"
     ],
     "pubDate": "2022-07-01",
     "externalUrl": "https://cat-bounce.com/",
@@ -104,13 +177,29 @@
     "author": "Luigi Skull"
   },
   {
+    "slug": "chess_com/chess-com",
+    "title": "Chess.com",
+    "description": "El mayor hub de ajedrez online: partidas, lecciones y comunidad global en un solo lugar.",
+    "tags": [
+      "gaming",
+      "chess",
+      "ajedrez",
+      "aprender"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://www.chess.com/es",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
     "slug": "Classcentral/Classcentral",
     "title": "Classcentral",
-    "description": "El Hub central de los cursos en línea.",
+    "description": "El principal hub de cursos en línea: educación digital, gratuita y accesible desde cualquier lugar.",
     "tags": [
-      "pagína",
+      "pagina",
       "web",
-      "Cursos"
+      "cursos",
+      "educativo"
     ],
     "pubDate": "2022-07-01",
     "externalUrl": "https://www.classcentral.com/",
@@ -118,12 +207,29 @@
     "author": "Luigi Skull"
   },
   {
+    "slug": "Comick/Comick",
+    "title": "ComicK",
+    "description": "Portal de manga gratis,multilingüe y seguro, sin registros ni publicidad invasiva.",
+    "tags": [
+      "lectura",
+      "web",
+      "manga",
+      "anime",
+      "comic",
+      "otaku"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://comick.io/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
     "slug": "Cookie_Clicker/Cookie_Clicker",
     "title": "Cookie Clicker",
-    "description": "Galletas por click",
+    "description": "Juego clicker de galletas: gana puntos por cada clic y desbloquea mejoras adictivas.",
     "tags": [
-      "Gaming",
-      "pagina",
+      "gaming",
+      "paginas",
       "juego",
       "galleta"
     ],
@@ -133,13 +239,43 @@
     "author": "Luigi Skull"
   },
   {
+    "slug": "dab_music_player/dab_music_player",
+    "title": "Dab Music Player",
+    "description": "Reproductor de música gratis sin anuncios, rápido y accesible desde cualquier dispositivo.",
+    "tags": [
+      "musica",
+      "reproductor",
+      "streaming",
+      "music"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://dab.yeet.su/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "deep_sea/deep_sea",
+    "title": "Deep Sea",
+    "description": "¡Explora las profundidades!",
+    "tags": [
+      "paginas",
+      "educativo",
+      "oceano",
+      "mar"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://neal.fun/deep-sea/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
     "slug": "desktop_goose/desktop_goose",
     "title": "Desktop Goose",
     "description": "HONK HONK!",
     "tags": [
-      "softwareg",
+      "software",
       "herramienta",
-      "juego",
+      "gaming",
       "ganso"
     ],
     "pubDate": "2022-07-01",
@@ -150,13 +286,16 @@
   {
     "slug": "distrowatch/distrowatch",
     "title": "Distrowatch",
-    "description": "El directorio Linux",
+    "description": "el directorio Linux definitivo: herramientas, distros y recursos en un solo lugar.",
     "tags": [
-      "pagína",
+      "paginas",
       "web",
-      "Linux",
-      "Codigo abierto",
-      "Open source"
+      "linux",
+      "codigo abierto",
+      "open",
+      "source",
+      "sistema",
+      "operativo"
     ],
     "pubDate": "2022-07-01",
     "externalUrl": "https://distrowatch.com/",
@@ -166,10 +305,10 @@
   {
     "slug": "ducklings/ducklings",
     "title": "Ducklings",
-    "description": "Familia de patos",
+    "description": "Juego multijugador online de patos: recolecta patitos, mejora tu nido y domina el estanque.",
     "tags": [
       "gaming",
-      "pagina",
+      "paginas",
       "divertido",
       "zen",
       "pato"
@@ -180,14 +319,79 @@
     "author": "Luigi Skull"
   },
   {
+    "slug": "em-fceux/em-fceux",
+    "title": "EM-FCEUX",
+    "description": "Emulador NES desde tu navegador, sin descargas y totalmente gratis.",
+    "tags": [
+      "gaming",
+      "emulador",
+      "divertido",
+      "nes",
+      "super",
+      "mario"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://tsone.kapsi.fi/em-fceux//",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "emugen_gametechwiki/emugen_gametechwiki",
+    "title": "Emugen",
+    "description": "Biblioteca completa de emuladores: información actualizada sobre todas las plataformas y sistemas disponibles.",
+    "tags": [
+      "gaming",
+      "paginas",
+      "emulacion",
+      "nintendo",
+      "videojuego",
+      "juego"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://emulation.gametechwiki.com/index.php/Emulators_on_browsers",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "everybodywiki/everybodywiki",
+    "title": "Everybodywiki",
+    "description": "La Enciclopedia que rescata wikis y promueve la inclusión digital.",
+    "tags": [
+      "paginas",
+      "wikia",
+      "herramienta",
+      "articulos"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://es.everybodywiki.com/Especial:Aleatoria",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "excalidraw/excalidraw",
+    "title": "Excalidraw",
+    "description": "Sketching colaborativo en tiempo real para equipos creativos.",
+    "tags": [
+      "paginas",
+      "software",
+      "herramienta",
+      "dibujo"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://excalidraw.com/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
     "slug": "floor796/floor796",
     "title": "Floor796",
     "description": "Animación Única en Expansión",
     "tags": [
-      "pagina",
+      "paginas",
       "web",
-      "Meme",
-      "pop"
+      "meme",
+      "pop",
+      "geek"
     ],
     "pubDate": "2022-07-01",
     "externalUrl": "https://floor796.com/",
@@ -195,13 +399,31 @@
     "author": "Luigi Skull"
   },
   {
+    "slug": "future_tools/future_tools",
+    "title": "FutureTools",
+    "description": "Recopilación de herramientas IA´s",
+    "tags": [
+      "paginas",
+      "ia",
+      "herramienta",
+      "pop",
+      "open",
+      "source"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://www.futuretools.io/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
     "slug": "godot/godot",
     "title": "Godot",
-    "description": "Motor gratuito y Open source",
+    "description": "Motor de videojuegos gratuito y de código abierto para desarrolladores independientes.",
     "tags": [
       "software",
-      "3D",
-      "Open source",
+      "3d",
+      "open",
+      "source",
       "herramienta"
     ],
     "pubDate": "2022-07-01",
@@ -210,13 +432,45 @@
     "author": "Luigi Skull"
   },
   {
-    "slug": "instructables/instructables",
-    "title": "instructables",
-    "description": "El hogar de toda la comunidad de creadores.",
+    "slug": "histography/histography",
+    "title": "Histography",
+    "description": "Línea de tiempo interactiva de la historia universal.",
     "tags": [
       "pagina",
       "web",
-      "DIY",
+      "historia",
+      "aprender",
+      "educativo"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://histography.io/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "imsdb/imsdb",
+    "title": "IMSDB",
+    "description": "Guiones de cine blockbuster para guionistas y cinéfilos.",
+    "tags": [
+      "pelicula",
+      "web",
+      "guion",
+      "cinefilo",
+      "cine"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://imsdb.com/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "instructables/instructables",
+    "title": "instructables",
+    "description": "Repositorio de guías prácticas impulsadas por una comunidad de desarrolladores.",
+    "tags": [
+      "pagina",
+      "web",
+      "diy",
       "proyectos"
     ],
     "pubDate": "2022-07-01",
@@ -225,14 +479,30 @@
     "author": "Luigi Skull"
   },
   {
+    "slug": "ironreader/ironreader",
+    "title": "Ironreader",
+    "description": "Feed de noticias personalizado con control total sobre tus fuentes de información",
+    "tags": [
+      "lectura",
+      "noticias",
+      "web",
+      "app",
+      "feed"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://www.inoreader.com/es/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
     "slug": "itchio/itchio",
     "title": "itchio",
-    "description": "el epicentro del mundo indie.",
+    "description": "El epicentro del universo indie para desarrolladores y gamers.",
     "tags": [
-      "pagína",
-      "Gaming",
+      "pagina",
+      "gaming",
       "web",
-      "Indie"
+      "indie"
     ],
     "pubDate": "2022-07-01",
     "externalUrl": "https://itch.io/",
@@ -241,12 +511,12 @@
   },
   {
     "slug": "Kiwix/Kiwix",
-    "title": "Kiwixt",
-    "description": "Liberando a la Wikipedia",
+    "title": "Kiwix",
+    "description": "Software gratuito para descargar Wikipedia y acceder sin conexión.",
     "tags": [
       "software",
-      "Wikia",
-      "Enciclopedia",
+      "wikia",
+      "enciclopedia",
       "herramienta",
       "web"
     ],
@@ -258,10 +528,13 @@
   {
     "slug": "Kodi/kodi",
     "title": "Kodi",
-    "description": "El reproductor definitivo",
+    "description": "Software libre para reproducción de audio, video y gestión de medios.",
     "tags": [
       "software",
-      "Películas",
+      "streaming",
+      "peliculas",
+      "cine",
+      "series",
       "software",
       "herramienta"
     ],
@@ -271,13 +544,76 @@
     "author": "Luigi Skull"
   },
   {
+    "slug": "krita/krita",
+    "title": "Krita",
+    "description": "Programa gratuito de código abierto para ilustración y diseño digital.",
+    "tags": [
+      "software",
+      "dibujo",
+      "open",
+      "source",
+      "herramienta"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://krita.org/es/download/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "libre_speed/libre_speed",
+    "title": "librespeed",
+    "description": "Test de velocidad de internet gratuito y de código abierto para medir tu conexión.",
+    "tags": [
+      "paginas",
+      "test",
+      "internet",
+      "velocidad"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://librespeed.org/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "lichess/lichess",
+    "title": "Lichess",
+    "description": "Plataforma de ajedrez open source para jugar y desarrollar estrategias.",
+    "tags": [
+      "gaming",
+      "ajedrez",
+      "open",
+      "source",
+      "chess"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://lichess.org/es/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "Linux_Journey/Linux_Journey",
+    "title": "Linux Journey",
+    "description": "Plataforma educativa para aprender Linux y convertirte en experto.",
+    "tags": [
+      "software",
+      "linux",
+      "open",
+      "source",
+      "os"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://lichess.org/es/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
     "slug": "musclewiki/musclewiki",
     "title": "MuscleWiki",
-    "description": "El gimnasio hecho enciclopedia ",
+    "description": "Enciclopedia completa de entrenamiento físico.",
     "tags": [
-      "pagina",
+      "paginas",
       "web",
-      "Gym",
+      "gym",
       "fitness",
       "ejercicios"
     ],
@@ -287,14 +623,30 @@
     "author": "Luigi Skull"
   },
   {
-    "slug": "mynoise/musclewiki",
+    "slug": "music_map/music_map",
+    "title": "Music-Map",
+    "description": "Descubre artistas similares con un mapa musical adaptado a tus gustos.",
+    "tags": [
+      "musica",
+      "web",
+      "paginas",
+      "minimalista",
+      "zen"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://www.music-map.com/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "mynoise/mynoise",
     "title": "Mynoise",
-    "description": "Ven y relájate",
+    "description": "Plataforma de sonidos calmantes para mejorar tu bienestar mental.",
     "tags": [
       "pagina",
       "web",
-      "Musica",
-      "relajación",
+      "musica",
+      "relajacion",
       "zen"
     ],
     "pubDate": "2022-07-01",
@@ -303,14 +655,31 @@
     "author": "Luigi Skull"
   },
   {
+    "slug": "ninjawiki/ninjawiki",
+    "title": "Ninja Kiwi archive",
+    "description": "Biblioteca de juegos Flash restaurados para plataformas actuales.",
+    "tags": [
+      "gaming",
+      "web",
+      "musica",
+      "relajacion",
+      "zen"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://ninjakiwi.com/archive",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
     "slug": "NoteBookLM/NoteBookLM",
     "title": "NotebookLM",
-    "description": "Tu ayudante de InvestigAción",
+    "description": "Inteligencia artificial con fuentes de datos personalizables para resultados precisos.",
     "tags": [
       "software",
       "web",
       "software",
-      "herramienta"
+      "herramienta",
+      "ia"
     ],
     "pubDate": "2022-07-01",
     "externalUrl": "https://notebooklm.google/",
@@ -318,14 +687,47 @@
     "author": "Luigi Skull"
   },
   {
+    "slug": "online_m_school/online_m_school",
+    "title": "OnlineMSchool",
+    "description": "Aprende matemáticas online con cursos interactivos y recursos gratuitos.",
+    "tags": [
+      "paginas",
+      "web",
+      "matematicas",
+      "educativo",
+      "aprender"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://es.onlinemschool.com/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "paint_sumo/NoteBookLM",
+    "title": "Paint.sumo",
+    "description": "Software de dibujo profesional en el navegador, sin instalaciones y listo para crear.",
+    "tags": [
+      "software",
+      "herramienta",
+      "dibujo",
+      "pagina"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://paint.sumo.app/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
     "slug": "Passweird/Passweird",
     "title": "Passweird",
-    "description": " El generador de contraseñas tan repulsivo que hasta un hacker se pondría enfermo.",
+    "description": "Generador de claves seguras y repulsivas para ataques maliciosos",
     "tags": [
-      "pagína",
+      "paginas",
       "online",
-      "Herramienta",
-      "web"
+      "herramienta",
+      "generador",
+      "clave",
+      "contraseña"
     ],
     "pubDate": "2022-07-01",
     "externalUrl": "https://www.passweird.com/",
@@ -335,13 +737,14 @@
   {
     "slug": "Photopea/Photopea",
     "title": "Photopea",
-    "description": "Photopea, la alternativa a photoshop",
+    "description": "Editor de imágenes online tipo Photoshop: rápido, gratis y sin instalación.",
     "tags": [
-      "Software",
-      "pagína",
+      "software",
+      "paginas",
       "online",
-      "Diseño",
-      "Herramienta",
+      "diseño",
+      "dibujo",
+      "herramienta",
       "web"
     ],
     "pubDate": "2022-07-01",
@@ -352,12 +755,15 @@
   {
     "slug": "pico_8/pico_8",
     "title": "Pico-8",
-    "description": "El rey de las consolas de fantasía",
+    "description": "La consola retro de fantasía favorita de la comunidad online.",
     "tags": [
+      "gaming",
       "software",
       "emuladores",
       "videojuegos",
-      "retro"
+      "retro",
+      "fantasy",
+      "console"
     ],
     "pubDate": "2022-07-01",
     "externalUrl": "https://www.lexaloffle.com/pico-8.php",
@@ -367,11 +773,14 @@
   {
     "slug": "pixelroma/pixelroma",
     "title": "Pixelorama",
-    "description": "Para los amantes del Pixelart",
+    "description": "Software gratuito para diseño de Pixel Art con herramientas avanzadas.",
     "tags": [
       "software",
       "pagina",
+      "diseño",
       "videojuegos",
+      "pixel",
+      "art",
       "retro"
     ],
     "pubDate": "2022-07-01",
@@ -384,10 +793,10 @@
     "title": "Pointerpointer",
     "description": "¡Hey! ¿Dónde esta mi cusor?  ",
     "tags": [
-      "pagina",
+      "paginas",
       "meme",
       "curioso",
-      "Divertido"
+      "divertido"
     ],
     "pubDate": "2022-07-01",
     "externalUrl": "https://pointerpointer.com/",
@@ -395,14 +804,61 @@
     "author": "Luigi Skull"
   },
   {
-    "slug": "qr_grid/qr_grid",
-    "title": "QR GRID",
-    "description": "Generador de QR simple",
+    "slug": "Polotno/Plotno",
+    "title": "Polotno Studio",
+    "description": "Herramienta de diseño semiabierta como alternativa flexible y gratuita a Canvas.",
     "tags": [
       "pagina",
       "herramienta",
+      "diseño",
+      "grafico"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://studio.polotno.com/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "Promptingguide/Promptingguide",
+    "title": "Promptingguide",
+    "description": "Manual avanzado de prompt engineering para mejorar resultados con inteligencia artificial.",
+    "tags": [
+      "paginas",
+      "herramienta",
+      "ia",
+      "guia",
+      "tutorial"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://www.promptingguide.ai",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "Ptable/Ptable",
+    "title": "Ptable",
+    "description": "Tabla periódica interactiva online con información detallada de cada elemento químico.",
+    "tags": [
+      "paginas",
+      "herramienta",
+      "educativo",
+      "quimica",
+      "ciencia"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://ptable.com/?lang=es#Propiedades/Serie",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "qr_grid/qr_grid",
+    "title": "QR GRID",
+    "description": "Generador de QR minimalista para enlaces, textos y más. ¡Sin registros!.",
+    "tags": [
+      "paginas",
+      "herramienta",
       "software",
-      "QR"
+      "qr"
     ],
     "pubDate": "2022-07-01",
     "externalUrl": "https://qr.grid.ws/",
@@ -412,12 +868,13 @@
   {
     "slug": "radio_garden/radio_garden",
     "title": "Radio Garden",
-    "description": "Escucha Radios de Todo el Mundo en Vivo",
+    "description": "Radio en vivo internacional: sintoniza estaciones de cualquier país al instante.",
     "tags": [
       "musica",
       "pagina",
       "herramienta",
-      "Divertido"
+      "radio",
+      "divertido"
     ],
     "pubDate": "2022-07-01",
     "externalUrl": "https://radio.garden/",
@@ -425,11 +882,29 @@
     "author": "Luigi Skull"
   },
   {
+    "slug": "random_password_gen/random_password_gen",
+    "title": "Random password gen",
+    "description": "Generador de contraseñas con parámetros personalizables para mayor seguridad online",
+    "tags": [
+      "paginas",
+      "generador",
+      "clave",
+      "herramienta",
+      "contraseña",
+      "divertido"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://random-password-gen.web.app/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
     "slug": "retroarch/retroarch",
     "title": "RetroArch",
-    "description": "Colección de emuladores retro",
+    "description": "Plataforma de emulación de videojuegos retro con soporte multiplataforma y código libre.",
     "tags": [
       "software",
+      "gaming",
       "emuladores",
       "videojuegos",
       "retro"
@@ -440,13 +915,29 @@
     "author": "Luigi Skull"
   },
   {
+    "slug": "rtcd/rtcd",
+    "title": "Rtcd.io",
+    "description": "Suite de herramientas online gratuitas para productividad, diseño y desarrollo web.",
+    "tags": [
+      "paginas",
+      "herramienta",
+      "trabajo",
+      "programacion",
+      "diseño"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://rtcd.io/es/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
     "slug": "spelunky/spelunky",
     "title": "Spelunky",
-    "description": "Plataformas Roguelike",
+    "description": "Plataforma roguelike indie con mecánicas retro y aleatoria",
     "tags": [
       "gaming",
       "web",
-      "pagina",
+      "paginas",
       "Retro",
       "videojuegos"
     ],
@@ -458,7 +949,7 @@
   {
     "slug": "spotify/spotify",
     "title": "Spotify",
-    "description": "Todo sobre Spotify, el gigante del streaming musical.",
+    "description": "Spotify: la plataforma de música en streaming más grande de internet con millones de canciones",
     "tags": [
       "musica",
       "reproductores",
@@ -472,13 +963,15 @@
   {
     "slug": "stremio/stremi.o",
     "title": "Stremio",
-    "description": "el Netflix de código abierto",
+    "description": "Reproductor multimedia y centro de medios de código abierto para gestionar audio, video y streaming.",
     "tags": [
+      "streaming",
       "cine",
       "peliculas",
-      "streaming",
-      "Software",
-      "Opensource"
+      "series",
+      "software",
+      "open",
+      "source"
     ],
     "pubDate": "2022-07-01",
     "externalUrl": "https://www.stremio.com/",
@@ -488,7 +981,7 @@
   {
     "slug": "supercook/supercook",
     "title": "Supercook",
-    "description": "Cocina con lo que tengas",
+    "description": "Encuentra recetas con los ingredientes que tienes en casa, sin complicaciones.",
     "tags": [
       "paginas",
       "herramienta",
@@ -496,14 +989,14 @@
       "cocina"
     ],
     "pubDate": "2022-07-01",
-    "externalUrl": " https://www.supercook.com/#/desktop",
+    "externalUrl": "https://www.supercook.com/#/desktop",
     "coverImage": null,
     "author": "Luigi Skull"
   },
   {
     "slug": "tarotoo/tarotoo",
     "title": "taotoo",
-    "description": "Lecturas de cartas online",
+    "description": "Consulta de cartas virtual desde cualquier lugar, con interpretación profesional.",
     "tags": [
       "paginas",
       "herramienta",
@@ -516,28 +1009,44 @@
     "author": "Luigi Skull"
   },
   {
-    "slug": "tetrio/tetrio",
-    "title": "Tetri.o",
-    "description": "Tetris revolucionado.",
+    "slug": "teoria_com/teoria_com",
+    "title": "Teoria.com",
+    "description": "Lecciones de música online interactivas para aprender teoria musical",
     "tags": [
-      "paginas",
-      "Gaming",
-      "web",
-      "Indie"
+      "musica",
+      "pagina",
+      "aprender",
+      "lecciones"
     ],
     "pubDate": "2022-07-01",
-    "externalUrl": "https://google.com",
+    "externalUrl": "https://www.teoria.com/es/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "tetrio/tetrio",
+    "title": "Tetri.o",
+    "description": "Revive el clásico Tetris con funciones modernas y juego en tiempo real contra otros jugadores.",
+    "tags": [
+      "gaming",
+      "paginas",
+      "web",
+      "indie"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://tetr.io/",
     "coverImage": null,
     "author": "Luigi Skull"
   },
   {
     "slug": "the_bezier_game/the_bezier_game",
     "title": "The Bezier Game",
-    "description": "El juego para dominar Bézier",
+    "description": "Juego interactivo para aprender y dominar curvas Bézier en diseño gráfico digital.r",
     "tags": [
       "paginas",
       "web",
-      "diseño gráfico",
+      "diseño",
+      "grafico",
       "herramienta"
     ],
     "pubDate": "2022-07-01",
@@ -546,14 +1055,124 @@
     "author": "Luigi Skull"
   },
   {
+    "slug": "the_uncensored_library/the_uncensored_library",
+    "title": "The uncensored library",
+    "description": "Proyecto en Minecraft que alberga libros censurados y promueve la libertad de expresión",
+    "tags": [
+      "lectura",
+      "gaming",
+      "libros",
+      "minecraft",
+      "sin",
+      "censura"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://uncensoredlibrary.com/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "thispersondoesnotexist/thispersondoesnotexist",
+    "title": "ThisPersonDoesNotExist",
+    "description": "Una cara nueva en cada click",
+    "tags": [
+      "paginas",
+      "web",
+      "ia",
+      "generador"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://thispersondoesnotexist.com/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "time_is/times_is",
+    "title": "Time.is",
+    "description": "Reloj con precisión atómica para sincronización exacta y medición de tiempo ultra precisa.",
+    "tags": [
+      "paginas",
+      "web",
+      "tiempo",
+      "reloj",
+      "hora"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://time.is/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "type_fast/times_is",
+    "title": "TypeFast",
+    "description": "Pon a prueba tus habilidades de mecanografía con ejercicios online rápidos y gratuitos.",
+    "tags": [
+      "pagina",
+      "mecanografia",
+      "tecla",
+      "juego"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://typefast.io/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "usepanda/usepanda",
+    "title": "UsePanda",
+    "description": "Feeds especializados para diseñadores gráficos con recursos, inspiración y tendencias creativas.",
+    "tags": [
+      "lectura",
+      "noticias",
+      "web",
+      "diseño",
+      "grafico",
+      "generador"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://app.usepanda.com/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "use_the_keyboard/use_the_keyboard",
+    "title": "usethekeyboard",
+    "description": "Guía rápida de combinaciones de teclas para trabajar más rápido en cualquier plataforma",
+    "tags": [
+      "pagina",
+      "mecanografia",
+      "teclado",
+      "atajos"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://usethekeyboard.com/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "virtualvacation/virtualvacation",
+    "title": "virtualvacation",
+    "description": "Explora destinos globales sin salir de casa con tours virtuales",
+    "tags": [
+      "paginas",
+      "web",
+      "viaje",
+      "vacaciones"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://virtualvacation.us/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
     "slug": "websudoku/websudoku",
     "title": "Websudoku",
-    "description": "Tu sudoku diario",
+    "description": "Sudoku diario gratuito para entrenar tu mente y agilidad mental.",
     "tags": [
       "paginas",
       "web",
       "gaming",
-      "Puzzle"
+      "puzzle"
     ],
     "pubDate": "2022-07-01",
     "externalUrl": "https://es.websudoku.com/",
@@ -563,15 +1182,110 @@
   {
     "slug": "wiggly_paint/wiggly_paint",
     "title": "WigglyPaint",
-    "description": "Una divertida herramienta de dibujo",
+    "description": "Herramienta de dibujo divertida y gratuita para crear ilustraciones online ",
     "tags": [
       "paginas",
       "web",
-      "Dibujo",
+      "dibujo",
       "herramienta"
     ],
     "pubDate": "2022-07-01",
     "externalUrl": "https://wigglypaint.net/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "Wikibooks/wikiversity",
+    "title": "wikibooks",
+    "description": "Libros colaborativos y libres que cualquiera puede editar y mejorar online.",
+    "tags": [
+      "lectura",
+      "paginas",
+      "wiki",
+      "Libro",
+      "Aprender",
+      "informacion"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://es.wikibooks.org/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "wikiversity/wikiversity",
+    "title": "wikiversity",
+    "description": "Plataforma educativa libre y colaborativa que todos pueden editar y mejorar en línea.",
+    "tags": [
+      "paginas",
+      "wiki",
+      "Aprender",
+      "educativo",
+      "informacion"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://es.wikiversity.org/wiki/Portada",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "will_robots_take_my_job/wikiversity",
+    "title": "willrobotstakemyjob",
+    "description": "¿Puede un robot reemplazar mi trabajo?",
+    "tags": [
+      "paginas",
+      "ia",
+      "trabajo",
+      "informacion"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://willrobotstakemyjob.com/es/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "windy/windy",
+    "title": "windy",
+    "description": "Herramienta online de mapas climáticos con previsiones detalladas por ubicación.",
+    "tags": [
+      "paginas",
+      "noticias",
+      "clima",
+      "mapa",
+      "herramienta"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://www.windy.com/es/",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "youglish/youglish",
+    "title": "youglish",
+    "description": "YouTube como herramienta para aprender idiomas y perfeccionar tu acento.",
+    "tags": [
+      "paginas",
+      "streaming",
+      "idioma",
+      "educacion",
+      "aprender"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://es.youglish.com//",
+    "coverImage": null,
+    "author": "Luigi Skull"
+  },
+  {
+    "slug": "zlibrary/zlibrary",
+    "title": "Z-Library",
+    "description": "Biblioteca digital gratuita con acceso a miles de libros online para leer y descargar.",
+    "tags": [
+      "lectura",
+      "web",
+      "libros",
+      "leer"
+    ],
+    "pubDate": "2022-07-01",
+    "externalUrl": "https://es.z-lib.gd/",
     "coverImage": null,
     "author": "Luigi Skull"
   }
